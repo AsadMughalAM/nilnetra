@@ -1,9 +1,14 @@
 /* Horizontal Scroller Section Styles */
 
 .horizontal-scroller {
-  display: flex;
-  overflow-x: hidden;
+  overflow: hidden;
   width: 100%;
+  background: linear-gradient(135deg, #0f0f0f 0%, #2a2a2a 100%);
+}
+
+.horizontal-scroller .scroller-wrapper {
+  display: flex;
+  width: fit-content;
 }
 
 .horizontal-scroller .content {
@@ -31,13 +36,20 @@
 .horizontal-scroller .content-split {
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  gap: 3rem;
   padding: 2rem;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
-.horizontal-scroller .split-left,
+.horizontal-scroller .split-left {
+  flex: 0 0 30%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+
 .horizontal-scroller .split-right {
   flex: 1;
   display: flex;
@@ -46,13 +58,40 @@
   height: 100%;
 }
 
-.horizontal-scroller .split-image {
+/* Left image - smaller height, centered vertically */
+.horizontal-scroller .split-left .split-image {
+  max-width: 100%;
+  max-height: 60vh;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Right image - larger, takes more space */
+.horizontal-scroller .split-right .split-image {
   max-width: 100%;
   max-height: 90vh;
-  width: auto;
+  width: 60%;
   height: auto;
-  object-fit: contain;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  object-fit: cover;
+}
+
+/* Panel 3 specific styling */
+.horizontal-scroller .content:nth-child(3) {
+  width: 70vw !important;
+  padding: 0 !important;
+  justify-content: flex-end !important;
+}
+
+/* Panel 3 specific image styling - 50vw width, aligned right */
+.horizontal-scroller .content:nth-child(3) .split-image,
+.horizontal-scroller .content:nth-child(3) .panel-image {
+  width: 50vw !important;
+  height: 100vh !important;
+  max-width: 50vw !important;
+  max-height: 100vh !important;
+  object-fit: cover !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
 /* Responsive: Stack images on mobile */
@@ -62,34 +101,17 @@
     gap: 1rem;
   }
   
-  .horizontal-scroller .split-image {
+  .horizontal-scroller .split-left,
+  .horizontal-scroller .split-right {
+    flex: 1;
+  }
+  
+  .horizontal-scroller .split-left .split-image,
+  .horizontal-scroller .split-right .split-image {
     max-height: 45vh;
   }
-}
-
-/* Panel Background Colors */
-.horizontal-scroller .content:nth-child(1) {
-  background: linear-gradient(135deg, #0f0f0f 0%, #2a2a2a 100%);
-}
-
-.horizontal-scroller .content:nth-child(2) {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-  
-}
-
-.horizontal-scroller .content:nth-child(3) {
-  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-}
-
-.horizontal-scroller .content:nth-child(4) {
-  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
 }
 
 .horizontal-scroller .content p {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
-
-#panel-3{
-  width: 60vw;
-}
-
