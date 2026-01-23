@@ -85,7 +85,8 @@
 
 /* Panel 3 specific image styling - 50vw width, aligned right */
 .horizontal-scroller .content:nth-child(3) .split-image,
-.horizontal-scroller .content:nth-child(3) .panel-image {
+.horizontal-scroller .content:nth-child(3) .panel-image,
+.horizontal-scroller .content:nth-child(3) .panel-image-full {
   width: 50vw !important;
   height: 100vh !important;
   max-width: 50vw !important;

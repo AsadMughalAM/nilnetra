@@ -19,13 +19,13 @@
         smooth: 2, // Smoothness level (0-3, higher = smoother)
         effects: true, // Enable data-speed and data-lag effects
         smoothTouch: 0.1, // Smooth scrolling on touch devices
-        normalizeScroll: true, // Normalize scroll across browsers
+        normalizeScroll: false, // Changed to false to avoid conflicts with horizontal scroller
         ignoreMobileResize: true, // Prevent issues on mobile resize
       });
 
       console.log("✅ GSAP ScrollSmoother initialized");
 
-      // Optional: Expose smoother globally for debugging
+      // Expose smoother globally for debugging
       window.smoother = smoother;
     } else {
       // Retry if GSAP libraries not loaded yet

@@ -1,19 +1,34 @@
 {{ 'horizontal-scroller.css' | asset_url | stylesheet_tag }}
 
-<section id="horizontal-{{ section.id }}" class="horizontal-scroller">
+{%- style -%}
+  #horizontal-{{ section.id }} {
+    background: {{ section.settings.background_color | default: '#0f0f0f' }};
+  }
+
+  #horizontal-{{ section.id }} .content:nth-child(3) {
+    width: {{ section.settings.panel_3_width | default: 70 }}vw !important;
+  }
+{%- endstyle -%}
+
+<section
+  id="horizontal-{{ section.id }}"
+  class="horizontal-scroller"
+  data-section-id="{{ section.id }}"
+  data-section-type="horizontal-scroller"
+>
   <div class="scroller-wrapper">
-    <!-- Panel 1: Single Image -->
+    {%- comment -%} Panel 1: Single Image {%- endcomment -%}
     <div class="content">
-      {%- if section.settings.image_1 != blank -%}
+      {%- if section.settings.panel_1_image != blank -%}
         <img
-          src="{{ section.settings.image_1 | image_url: width: 1200 }}"
+          src="{{ section.settings.panel_1_image | image_url: width: 1200 }}"
           srcset="
-            {{ section.settings.image_1 | image_url: width: 400 }} 400w,
-            {{ section.settings.image_1 | image_url: width: 800 }} 800w,
-            {{ section.settings.image_1 | image_url: width: 1200 }} 1200w
+            {{ section.settings.panel_1_image | image_url: width: 400 }} 400w,
+            {{ section.settings.panel_1_image | image_url: width: 800 }} 800w,
+            {{ section.settings.panel_1_image | image_url: width: 1200 }} 1200w
           "
           sizes="(max-width: 768px) 80vw, 50vw"
-          alt="{{ section.settings.image_1.alt | escape }}"
+          alt="{{ section.settings.panel_1_image.alt | default: 'Panel 1' | escape }}"
           loading="lazy"
           class="panel-image"
         >
@@ -27,19 +42,19 @@
       {%- endif -%}
     </div>
 
-    <!-- Panel 2: Two Images Side by Side -->
+    {%- comment -%} Panel 2: Two Images Side by Side {%- endcomment -%}
     <div class="content content-split">
       <div class="split-left">
-        {%- if section.settings.image_2_left != blank -%}
+        {%- if section.settings.panel_2_image_left != blank -%}
           <img
-            src="{{ section.settings.image_2_left | image_url: width: 800 }}"
+            src="{{ section.settings.panel_2_image_left | image_url: width: 800 }}"
             srcset="
-              {{ section.settings.image_2_left | image_url: width: 400 }} 400w,
-              {{ section.settings.image_2_left | image_url: width: 600 }} 600w,
-              {{ section.settings.image_2_left | image_url: width: 800 }} 800w
+              {{ section.settings.panel_2_image_left | image_url: width: 400 }} 400w,
+              {{ section.settings.panel_2_image_left | image_url: width: 600 }} 600w,
+              {{ section.settings.panel_2_image_left | image_url: width: 800 }} 800w
             "
-            sizes="(max-width: 768px) 80vw, 40vw"
-            alt="{{ section.settings.image_2_left.alt | escape }}"
+            sizes="(max-width: 768px) 80vw, 30vw"
+            alt="{{ section.settings.panel_2_image_left.alt | default: 'Left Image' | escape }}"
             loading="lazy"
             class="split-image"
           >
@@ -54,16 +69,16 @@
       </div>
 
       <div class="split-right">
-        {%- if section.settings.image_2_right != blank -%}
+        {%- if section.settings.panel_2_image_right != blank -%}
           <img
-            src="{{ section.settings.image_2_right | image_url: width: 800 }}"
+            src="{{ section.settings.panel_2_image_right | image_url: width: 1200 }}"
             srcset="
-              {{ section.settings.image_2_right | image_url: width: 400 }} 400w,
-              {{ section.settings.image_2_right | image_url: width: 600 }} 600w,
-              {{ section.settings.image_2_right | image_url: width: 800 }} 800w
+              {{ section.settings.panel_2_image_right | image_url: width: 600 }} 600w,
+              {{ section.settings.panel_2_image_right | image_url: width: 900 }} 900w,
+              {{ section.settings.panel_2_image_right | image_url: width: 1200 }} 1200w
             "
-            sizes="(max-width: 768px) 80vw, 40vw"
-            alt="{{ section.settings.image_2_right.alt | escape }}"
+            sizes="(max-width: 768px) 80vw, 60vw"
+            alt="{{ section.settings.panel_2_image_right.alt | default: 'Right Image' | escape }}"
             loading="lazy"
             class="split-image"
           >
@@ -78,27 +93,27 @@
       </div>
     </div>
 
-    <!-- Panel 3: Single Image -->
+    {%- comment -%} Panel 3: Featured Image {%- endcomment -%}
     <div class="content">
-      {%- if section.settings.image_3 != blank -%}
+      {%- if section.settings.panel_3_image != blank -%}
         <img
-          src="{{ section.settings.image_3 | image_url: width: 1200 }}"
+          src="{{ section.settings.panel_3_image | image_url: width: 1200 }}"
           srcset="
-            {{ section.settings.image_3 | image_url: width: 400 }} 400w,
-            {{ section.settings.image_3 | image_url: width: 800 }} 800w,
-            {{ section.settings.image_3 | image_url: width: 1200 }} 1200w
+            {{ section.settings.panel_3_image | image_url: width: 600 }} 600w,
+            {{ section.settings.panel_3_image | image_url: width: 900 }} 900w,
+            {{ section.settings.panel_3_image | image_url: width: 1200 }} 1200w
           "
-          sizes="(max-width: 768px) 80vw, 50vw"
-          alt="{{ section.settings.image_3.alt | escape }}"
+          sizes="50vw"
+          alt="{{ section.settings.panel_3_image.alt | default: 'Panel 3' | escape }}"
           loading="lazy"
-          class="panel-image"
+          class="panel-image-full"
         >
       {%- else -%}
         <img
           src="{{ 'content4.jpg' | asset_url }}"
           alt="Content 4"
           loading="lazy"
-          class="split-image"
+          class="panel-image-full"
         >
       {%- endif -%}
     </div>
@@ -106,93 +121,126 @@
 </section>
 
 <script>
-  // Wait for GSAP to be fully loaded
-  function initHorizontalScroller() {
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  (function() {
+    'use strict';
+
+    function initHorizontalScroller_{{ section.id | replace: '-', '_' }}() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        setTimeout(initHorizontalScroller_{{ section.id | replace: '-', '_' }}, 100);
+        return;
+      }
+
       gsap.registerPlugin(ScrollTrigger);
 
-      // Horizontal scroll animation with smooth effect
       const sectionId = '#horizontal-{{ section.id }}';
       const wrapper = document.querySelector(sectionId + ' .scroller-wrapper');
 
-      if (wrapper) {
-        // Get actual width of wrapper
-        const scrollWidth = wrapper.scrollWidth;
-        const viewportWidth = window.innerWidth;
+      if (!wrapper) return;
 
-        gsap.to(wrapper, {
-          x: -(scrollWidth - viewportWidth),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionId,
-            pin: true,
-            scrub: 1,
-            end: () => '+=' + (scrollWidth - viewportWidth),
-            markers: false,
-          },
-        });
-      }
-    } else {
-      // Retry if GSAP not loaded yet
-      setTimeout(initHorizontalScroller, 100);
+      // Get actual width of wrapper
+      const scrollWidth = wrapper.scrollWidth;
+      const viewportWidth = window.innerWidth;
+
+      // Create horizontal scroll animation
+      gsap.to(wrapper, {
+        x: -(scrollWidth - viewportWidth),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionId,
+          pin: true,
+          scrub: {{ section.settings.scroll_smoothness | default: 1 }},
+          end: () => '+=' + (scrollWidth - viewportWidth),
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // Refresh on resize
+      let resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 250);
+      });
     }
-  }
 
-  // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHorizontalScroller);
-  } else {
-    initHorizontalScroller();
-  }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHorizontalScroller_{{ section.id | replace: '-', '_' }});
+    } else {
+      initHorizontalScroller_{{ section.id | replace: '-', '_' }}();
+    }
+  })();
 </script>
 
 {% schema %}
 {
   "name": "Horizontal Scroller",
   "tag": "section",
-  "class": "section",
+  "class": "section-horizontal-scroller",
   "settings": [
     {
       "type": "header",
-      "content": "Panel 1 - Single Image"
+      "content": "General Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#0f0f0f"
+    },
+    {
+      "type": "range",
+      "id": "scroll_smoothness",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.5,
+      "unit": "x",
+      "label": "Scroll Smoothness",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Panel 1 - Full Width Image"
     },
     {
       "type": "image_picker",
-      "id": "image_1",
+      "id": "panel_1_image",
       "label": "Image",
       "info": "Leave empty to use default content1.jpg"
     },
     {
       "type": "header",
-      "content": "Panel 2 - Two Images"
+      "content": "Panel 2 - Split Layout"
     },
     {
       "type": "image_picker",
-      "id": "image_2_left",
+      "id": "panel_2_image_left",
       "label": "Left Image",
       "info": "Leave empty to use default content2.jpg"
     },
     {
       "type": "image_picker",
-      "id": "image_2_right",
+      "id": "panel_2_image_right",
       "label": "Right Image",
       "info": "Leave empty to use default content3.jpg"
     },
     {
       "type": "header",
-      "content": "Panel 3 - Single Image"
+      "content": "Panel 3 - Custom Width Image"
     },
     {
       "type": "image_picker",
-      "id": "image_3",
-      "label": "Image"
+      "id": "panel_3_image",
+      "label": "Image",
+      "info": "Leave empty to use default content4.jpg"
     },
     {
-      "type": "text",
-      "id": "text_3",
-      "label": "Fallback Text",
-      "default": "Content 3",
-      "info": "Displayed when no image is selected"
+      "type": "range",
+      "id": "panel_3_width",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "vw",
+      "label": "Panel Width",
+      "default": 70
     }
   ],
   "presets": [
