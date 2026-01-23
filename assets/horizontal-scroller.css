@@ -1,0 +1,95 @@
+/* Horizontal Scroller Section Styles */
+
+.horizontal-scroller {
+  display: flex;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.horizontal-scroller .content {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  font-size: 4rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* Single Image styling */
+.horizontal-scroller .content .panel-image {
+  max-width: 80%;
+  max-height: 100vh;
+  width: auto;
+  height: 100vh;
+  object-fit: contain;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Split Layout for Panel 2 */
+.horizontal-scroller .content-split {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  padding: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.horizontal-scroller .split-left,
+.horizontal-scroller .split-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.horizontal-scroller .split-image {
+  max-width: 100%;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive: Stack images on mobile */
+@media (max-width: 768px) {
+  .horizontal-scroller .content-split {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .horizontal-scroller .split-image {
+    max-height: 45vh;
+  }
+}
+
+/* Panel Background Colors */
+.horizontal-scroller .content:nth-child(1) {
+  background: linear-gradient(135deg, #0f0f0f 0%, #2a2a2a 100%);
+}
+
+.horizontal-scroller .content:nth-child(2) {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  
+}
+
+.horizontal-scroller .content:nth-child(3) {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.horizontal-scroller .content:nth-child(4) {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.horizontal-scroller .content p {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#panel-3{
+  width: 60vw;
+}
+
