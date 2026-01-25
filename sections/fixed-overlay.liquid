@@ -1,0 +1,142 @@
+{%- style -%}
+  .fixed-overlay-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 900; /* High z-index but below mobile menu/cart drawer (usually 1000+) */
+    pointer-events: none; /* Let clicks pass through to content */
+    color: {{ section.settings.text_color }};
+  }
+
+  .overlay-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .overlay-item {
+    position: absolute;
+    pointer-events: auto; /* Re-enable clicks for links */
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .overlay-item a {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .overlay-item a:hover {
+    opacity: 0.7;
+  }
+
+  /* Top Left: Navigation */
+  .overlay-top-left {
+    top: 2rem;
+    left: 2rem;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  /* Bottom Left: Bag */
+  .overlay-bottom-left {
+    bottom: 2rem;
+    left: 2rem;
+  }
+
+  /* Middle Right: Brand Name */
+  .overlay-middle-right {
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    /* Optional: Vertical writing mode if requested, but default normal */
+    /* writing-mode: vertical-rl; */
+    text-align: right;
+  }
+
+  .fixed-brand-name {
+    margin: 0;
+    font-family: "Times New Roman", Times, serif; /* Editorial look */
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 768px) {
+    .fixed-overlay-section {
+      display: none; /* Often hidden on mobile to save space */
+    }
+  }
+{%- endstyle -%}
+
+<div class="fixed-overlay-section" id="FixedOverlay-{{ section.id }}">
+  <div class="overlay-content">
+    <!-- Top Left Corner: Menu -->
+    <div class="overlay-item overlay-top-left">
+      {% if section.settings.menu != blank %}
+        {% for link in linklists[section.settings.menu].links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      {% else %}
+        <a href="#">Shop</a>
+        <a href="#">Lookbook</a>
+        <a href="#">About</a>
+      {% endif %}
+    </div>
+
+    <!-- Bottom Left Corner: Bag -->
+    <div class="overlay-item overlay-bottom-left">
+      <a href="{{ routes.cart_url }}" class="fixed-bag-link"> Bag ({{ cart.item_count }}) </a>
+    </div>
+
+    <!-- Middle Right Corner: Brand Name (Fixed) -->
+    <div class="overlay-item overlay-middle-right">
+      <h2 class="fixed-brand-name">{{ section.settings.brand_text | default: shop.name }}</h2>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Move this section to body to avoid GSAP ScrollSmoother transform conflicts
+    const overlay = document.getElementById('FixedOverlay-{{ section.id }}');
+    if (overlay) {
+      document.body.appendChild(overlay);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Fixed Overlay Layout",
+  "settings": [
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Top Left Menu"
+    },
+    {
+      "type": "text",
+      "id": "brand_text",
+      "label": "Right Side Brand Text",
+      "default": "ALICIA MOORE"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fixed Overlay Layout"
+    }
+  ]
+}
+{% endschema %}
