@@ -3,6 +3,8 @@
   position: relative;
   z-index: 10; /* On top of middle (5) and horizontal (1) */
   margin-top: -100vh; /* Pull section up to overlap middle section */
+  isolation: isolate; /* Create independent stacking context */
+  transform: translate3d(0, 0, 0); /* Force GPU layer */
 }
 
 .large-image-section {
@@ -12,6 +14,9 @@
   background-color: var(--bg-color, #f4f3f1);
   color: var(--text-color, #1a1a1a);
   will-change: transform; /* Optimize for GSAP animations */
+  overflow: hidden; /* Contain content within section */
+  backface-visibility: hidden; /* Prevent flickering */
+  -webkit-backface-visibility: hidden; /* Safari support */
 }
 
 .manifesto-container {
@@ -70,20 +75,26 @@
 
 .large-image-wrapper {
   width: 100%;
-  /* Height is set via inline style in liquid file */
+  height: 100vh; /* Default full height */
   min-height: 50vh; /* Ensure minimum height */
-  overflow: hidden;
+  overflow: hidden; /* Contain image properly */
   position: relative;
-  background-color: #000; /* Fallback background */
+  contain: layout style paint; /* Optimize rendering */
+  will-change: auto; /* Let browser decide */
 }
 
 .large-image-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  min-height: inherit; /* Inherit minimum from wrapper */
   object-fit: cover;
   object-position: center;
   display: block;
+  transform: translateZ(0); /* Simple GPU hint */
+  will-change: auto; /* Prevent memory issues */
+  pointer-events: none; /* Prevent interaction interference */
 }
 
 @media (max-width: 768px) {

@@ -166,17 +166,20 @@
         scrollDistance: scrollWidth - viewportWidth
       });
 
-      // Create horizontal scroll animation
+      // Create horizontal scroll animation with optimized settings
       gsap.to(wrapper, {
         x: -(scrollWidth - viewportWidth),
         ease: 'none',
+        force3D: true, // GPU acceleration
         scrollTrigger: {
           trigger: sectionId,
           pin: true,
-          pinSpacing: true, // Keep spacing for proper flow
-          scrub: {{ section.settings.scroll_smoothness | default: 0 }},
+          pinSpacing: true,
+          scrub: 0.5, // Optimized for smooth response
           end: () => '+=' + (scrollWidth - viewportWidth),
           invalidateOnRefresh: true,
+          anticipatePin: 1, // Smooth pin transition
+          fastScrollEnd: true, // Better fast scroll performance
           // markers: true, // Uncomment for debugging
         },
       });
@@ -188,9 +191,10 @@
         if (middleSection) {
           console.log('Middle section found, setting up stacking animation');
 
-          // Set initial state (only y position, no scale)
+          // Set initial state with GPU acceleration
           gsap.set(middleSection, {
             y: 100,
+            force3D: true,
           });
 
           // Create the stacking scroll animation
@@ -199,21 +203,23 @@
               trigger: middleSection,
               pin: true,
               pinSpacing: true,
-              scrub: 1,
+              scrub: 0.5, // Optimized for smooth response
               start: 'top top',
               end: '+=100%',
               invalidateOnRefresh: true,
+              anticipatePin: 1, // Smooth pin transition
+              fastScrollEnd: true, // Better fast scroll performance
               // markers: true, // Uncomment for debugging
               onEnter: () => console.log('Middle section stacking animation started'),
               onLeave: () => console.log('Middle section stacking animation completed'),
             },
           });
 
-          // Animate section (only y position, no scale)
+          // Animate section with linear easing
           stackTimeline.to(middleSection, {
             y: 0,
-            ease: 'power2.out',
-            duration: 1,
+            ease: 'none', // Linear for smooth scroll-linked animation
+            force3D: true, // GPU acceleration
           });
         } else {
           console.warn('Middle image section not found. Make sure it exists on the page.');
@@ -228,6 +234,7 @@
           // Set initial state (only y position, no scale)
           gsap.set(largeSection, {
             y: 100,
+            force3D: true, // Force GPU acceleration
           });
 
           // Create the stacking scroll animation for large section
@@ -236,10 +243,12 @@
               trigger: largeSection,
               pin: true,
               pinSpacing: true,
-              scrub: 1,
+              scrub: 0.5, // Reduced for more responsive feel
               start: 'top top',
               end: '+=100%',
               invalidateOnRefresh: true,
+              anticipatePin: 1, // Smooth pin transition
+              fastScrollEnd: true, // Better performance on fast scroll
               // markers: true, // Uncomment for debugging
               onEnter: () => console.log('Large section stacking animation started'),
               onLeave: () => console.log('Large section stacking animation completed'),
@@ -249,8 +258,8 @@
           // Animate section (only y position, no scale)
           largeStackTimeline.to(largeSection, {
             y: 0,
-            ease: 'power2.out',
-            duration: 1,
+            ease: 'none', // Linear for smooth scroll-linked animation
+            force3D: true, // Force GPU acceleration
           });
         } else {
           console.warn('Large image section not found. Make sure it exists on the page.');
