@@ -1,6 +1,6 @@
 {{ 'middle-image-section.css' | asset_url | stylesheet_tag }}
 
-<section class="middle-image-wrapper" style="height: {{ section.settings.section_height }}vh;">
+<section class="middle-image-wrapper middle-image-section">
   {%- if section.settings.image != blank -%}
     {{
       section.settings.image
@@ -14,6 +14,8 @@
   {%- else -%}
     <img
       src="{{ 'middle-image-section.jpg' | asset_url }}"
+      width="1200"
+      height="800"
       alt="Middle Image"
       loading="lazy"
       class="middle-centered-image"
@@ -29,16 +31,6 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image"
-    },
-    {
-      "type": "range",
-      "id": "section_height",
-      "min": 50,
-      "max": 100,
-      "step": 5,
-      "unit": "vh",
-      "label": "Section Height",
-      "default": 100
     }
   ],
   "presets": [

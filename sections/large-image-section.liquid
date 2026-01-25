@@ -16,7 +16,14 @@
 
     <div class="manifesto-body">
       {%- if section.settings.icon != blank -%}
-        <img src="{{ section.settings.icon | image_url: width: 100 }}" class="manifesto-icon" alt="" loading="lazy">
+        <img
+          src="{{ section.settings.icon | image_url: width: 100 }}"
+          width="100"
+          height="100"
+          class="manifesto-icon"
+          alt=""
+          loading="lazy"
+        >
       {%- endif -%}
 
       <h2 class="manifesto-heading">{{ section.settings.title }}</h2>
@@ -34,6 +41,7 @@
         | image_url: width: 3000
         | image_tag:
           loading: 'lazy',
+          class: 'large-main-image',
           width: section.settings.image.width,
           height: section.settings.image.height,
           sizes: '100vw',
@@ -41,11 +49,12 @@
       }}
     {%- else -%}
       <img
-        src="{{ 'content1.jpg' | asset_url }} "
-        alt="Middle Image"
+        src="{{ 'content1.jpg' | asset_url }}"
+        alt="Large Image"
         loading="lazy"
-        width="100%"
-        height="200vh"
+        width="1920"
+        height="1080"
+        class="large-main-image"
       >
     {%- endif -%}
   </div>

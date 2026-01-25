@@ -28,6 +28,8 @@
             {{ section.settings.panel_1_image | image_url: width: 1200 }} 1200w
           "
           sizes="(max-width: 768px) 80vw, 50vw"
+          width="1200"
+          height="800"
           alt="{{ section.settings.panel_1_image.alt | default: 'Panel 1' | escape }}"
           loading="lazy"
           class="panel-image"
@@ -35,6 +37,8 @@
       {%- else -%}
         <img
           src="{{ 'content1.jpg' | asset_url }}"
+          width="1200"
+          height="800"
           alt="Content 1"
           loading="lazy"
           class="panel-image"
@@ -54,6 +58,8 @@
               {{ section.settings.panel_2_image_left | image_url: width: 800 }} 800w
             "
             sizes="(max-width: 768px) 80vw, 30vw"
+            width="800"
+            height="600"
             alt="{{ section.settings.panel_2_image_left.alt | default: 'Left Image' | escape }}"
             loading="lazy"
             class="split-image"
@@ -61,6 +67,8 @@
         {%- else -%}
           <img
             src="{{ 'content2.jpg' | asset_url }}"
+            width="800"
+            height="600"
             alt="Content 2"
             loading="lazy"
             class="split-image"
@@ -78,6 +86,8 @@
               {{ section.settings.panel_2_image_right | image_url: width: 1200 }} 1200w
             "
             sizes="(max-width: 768px) 80vw, 60vw"
+            width="1200"
+            height="800"
             alt="{{ section.settings.panel_2_image_right.alt | default: 'Right Image' | escape }}"
             loading="lazy"
             class="split-image"
@@ -85,6 +95,8 @@
         {%- else -%}
           <img
             src="{{ 'content3.jpg' | asset_url }}"
+            width="1200"
+            height="800"
             alt="Content 3"
             loading="lazy"
             class="split-image"
@@ -104,6 +116,8 @@
             {{ section.settings.panel_3_image | image_url: width: 1200 }} 1200w
           "
           sizes="50vw"
+          width="1200"
+          height="800"
           alt="{{ section.settings.panel_3_image.alt | default: 'Panel 3' | escape }}"
           loading="lazy"
           class="panel-image-full"
@@ -111,6 +125,8 @@
       {%- else -%}
         <img
           src="{{ 'content4.jpg' | asset_url }}"
+          width="1200"
+          height="800"
           alt="Content 4"
           loading="lazy"
           class="panel-image-full"
@@ -135,11 +151,20 @@
       const sectionId = '#horizontal-{{ section.id }}';
       const wrapper = document.querySelector(sectionId + ' .scroller-wrapper');
 
-      if (!wrapper) return;
+      if (!wrapper) {
+        console.warn('Horizontal scroller wrapper not found');
+        return;
+      }
 
       // Get actual width of wrapper
       const scrollWidth = wrapper.scrollWidth;
       const viewportWidth = window.innerWidth;
+
+      console.log('Horizontal Scroller Init:', {
+        scrollWidth,
+        viewportWidth,
+        scrollDistance: scrollWidth - viewportWidth
+      });
 
       // Create horizontal scroll animation
       gsap.to(wrapper, {
@@ -148,11 +173,90 @@
         scrollTrigger: {
           trigger: sectionId,
           pin: true,
+          pinSpacing: true, // Keep spacing for proper flow
           scrub: {{ section.settings.scroll_smoothness | default: 0 }},
           end: () => '+=' + (scrollWidth - viewportWidth),
           invalidateOnRefresh: true,
+          // markers: true, // Uncomment for debugging
         },
       });
+
+      // Wait for DOM to be fully ready before setting up middle section animation
+      setTimeout(() => {
+        const middleSection = document.querySelector('.middle-image-section');
+
+        if (middleSection) {
+          console.log('Middle section found, setting up stacking animation');
+
+          // Set initial state (only y position, no scale)
+          gsap.set(middleSection, {
+            y: 100,
+          });
+
+          // Create the stacking scroll animation
+          const stackTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: middleSection,
+              pin: true,
+              pinSpacing: true,
+              scrub: 1,
+              start: 'top top',
+              end: '+=100%',
+              invalidateOnRefresh: true,
+              // markers: true, // Uncomment for debugging
+              onEnter: () => console.log('Middle section stacking animation started'),
+              onLeave: () => console.log('Middle section stacking animation completed'),
+            },
+          });
+
+          // Animate section (only y position, no scale)
+          stackTimeline.to(middleSection, {
+            y: 0,
+            ease: 'power2.out',
+            duration: 1,
+          });
+        } else {
+          console.warn('Middle image section not found. Make sure it exists on the page.');
+        }
+
+        // Add stacking animation for large image section if it exists
+        const largeSection = document.querySelector('.large-image-section');
+
+        if (largeSection) {
+          console.log('Large section found, setting up stacking animation');
+
+          // Set initial state (only y position, no scale)
+          gsap.set(largeSection, {
+            y: 100,
+          });
+
+          // Create the stacking scroll animation for large section
+          const largeStackTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: largeSection,
+              pin: true,
+              pinSpacing: true,
+              scrub: 1,
+              start: 'top top',
+              end: '+=100%',
+              invalidateOnRefresh: true,
+              // markers: true, // Uncomment for debugging
+              onEnter: () => console.log('Large section stacking animation started'),
+              onLeave: () => console.log('Large section stacking animation completed'),
+            },
+          });
+
+          // Animate section (only y position, no scale)
+          largeStackTimeline.to(largeSection, {
+            y: 0,
+            ease: 'power2.out',
+            duration: 1,
+          });
+        } else {
+          console.warn('Large image section not found. Make sure it exists on the page.');
+        }
+      }, 500); // Wait 500ms for all sections to render
+
 
       // Refresh on resize
       let resizeTimer;
