@@ -1,0 +1,184 @@
+{{ 'custom-footer.css' | asset_url | stylesheet_tag }}
+
+<footer class="custom-footer">
+  <!-- Top: Large Brand Heading -->
+  <div class="footer-top">
+    <h1 class="footer-brand-heading">
+      {{ section.settings.brand_name | default: shop.name }}
+    </h1>
+  </div>
+
+  <!-- Bottom: 3-Column Grid -->
+  <div class="footer-bottom-grid">
+    <!-- Column 1: Navigation Groups -->
+    <div class="footer-col col-1">
+      <!-- Group 1 -->
+      <div class="nav-group">
+        <ul>
+          {% assign menu_1 = section.settings.menu_1 %}
+          {% for link in linklists[menu_1].links %}
+            <li>
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% else %}
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Stockists</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Group 2 -->
+      <div class="nav-group mt-large">
+        <ul>
+          {% assign menu_2 = section.settings.menu_2 %}
+          {% for link in linklists[menu_2].links %}
+            <li>
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% else %}
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns and Exchanges</a></li>
+            <li><a href="#">Customer Service</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Column 2: Legal & Social -->
+    <div class="footer-col col-2">
+      <!-- Group 3 (Legal) -->
+      <div class="nav-group">
+        <ul>
+          {% assign menu_legal = section.settings.menu_legal %}
+          {% for link in linklists[menu_legal].links %}
+            <li>
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% else %}
+            <li><a href="#">Terms and Conditions</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Accessibility</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Social Media -->
+      <div class="nav-group mt-large">
+        <ul class="social-links">
+          {% if section.settings.instagram_url != blank %}
+            <li><a href="{{ section.settings.instagram_url }}">Instagram</a></li>
+          {% else %}
+            <li><a href="#">Instagram</a></li>
+          {% endif %}
+
+          {% if section.settings.facebook_url != blank %}
+            <li><a href="{{ section.settings.facebook_url }}">Facebook</a></li>
+          {% else %}
+            <li><a href="#">Facebook</a></li>
+          {% endif %}
+
+          {% if section.settings.linkedin_url != blank %}
+            <li><a href="{{ section.settings.linkedin_url }}">LinkedIn</a></li>
+          {% else %}
+            <li><a href="#">LinkedIn</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Column 3: Newsletter -->
+    <div class="footer-col col-3">
+      <div class="newsletter-wrapper">
+        <span class="newsletter-label">Newsletter</span>
+        {% form 'customer', class: 'custom-newsletter-form' %}
+          <div class="newsletter-input-wrapper">
+            <input type="email" name="contact[email]" placeholder="Email Address" required>
+            <button type="submit" class="newsletter-arrow">→</button>
+          </div>
+        {% endform %}
+      </div>
+
+      <div class="footer-meta">
+        <div class="copyright">&copy; {{ section.settings.brand_name | default: shop.name }}</div>
+        {% if section.settings.brand_icon != blank %}
+          <div class="brand-icon">
+            <img
+              src="{{ section.settings.brand_icon | image_url: width: 60 }}"
+              alt="Brand Icon"
+              width="60"
+              height="60"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Magda Footer Layout",
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand Headline",
+      "default": "MAGDA BUTRYM"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_icon",
+      "label": "Brand/Rose Icon (Bottom Right)"
+    },
+    {
+      "type": "header",
+      "content": "Navigation Columns"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_1",
+      "label": "Menu 1 (Top Left)",
+      "info": "e.g. About, Contact"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "Menu 2 (Bottom Left)",
+      "info": "e.g. Shipping, Returns"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_legal",
+      "label": "Legal Menu (Top Middle)",
+      "info": "e.g. Terms, Privacy"
+    },
+    {
+      "type": "header",
+      "content": "Social Links"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "linkedin_url",
+      "label": "LinkedIn URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Magda Footer Layout"
+    }
+  ]
+}
+{% endschema %}
