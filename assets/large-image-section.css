@@ -1,0 +1,90 @@
+.large-image-section {
+  width: 100%;
+  position: relative;
+  z-index: 6; /* Stack on top of previous pinned sections */
+  background-color: var(--bg-color, #f4f3f1);
+  color: var(--text-color, #1a1a1a);
+}
+
+.manifesto-container {
+  padding: 4rem 2rem;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.manifesto-label {
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+
+.manifesto-body {
+  margin-top: auto;
+  margin-bottom: 4rem;
+  max-width: 800px;
+}
+
+.manifesto-icon {
+  width: 40px;
+  height: auto;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.manifesto-heading {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.2;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+.manifesto-link {
+  display: inline-block;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: currentColor;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: opacity 0.3s ease;
+}
+
+.manifesto-link:hover {
+  opacity: 0.7;
+}
+
+.large-image-wrapper {
+  width: 100%;
+  height: 100vh; /* Default full height */
+  overflow: hidden;
+  position: relative;
+}
+
+.large-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .manifesto-container {
+    padding: 2rem 1.5rem;
+    min-height: auto;
+  }
+  
+  .manifesto-heading {
+    font-size: 1.8rem;
+  }
+
+  .large-image-wrapper {
+    height: 60vh;
+  }
+}

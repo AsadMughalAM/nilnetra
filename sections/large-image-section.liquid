@@ -1,0 +1,133 @@
+{{ 'large-image-section.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .large-image-section {
+    --bg-color: {{ section.settings.bg_color }};
+    --text-color: {{ section.settings.text_color }};
+  }
+  #shopify-section-{{ section.id }} .large-image-wrapper {
+    height: {{ section.settings.image_height }}vh;
+  }
+{%- endstyle -%}
+
+<div class="large-image-section">
+  <div class="manifesto-container">
+    <div class="manifesto-label">{{ section.settings.subtitle }}</div>
+
+    <div class="manifesto-body">
+      {%- if section.settings.icon != blank -%}
+        <img src="{{ section.settings.icon | image_url: width: 100 }}" class="manifesto-icon" alt="" loading="lazy">
+      {%- endif -%}
+
+      <h2 class="manifesto-heading">{{ section.settings.title }}</h2>
+
+      {%- if section.settings.link_text != blank -%}
+        <a href="{{ section.settings.link_url }}" class="manifesto-link">{{ section.settings.link_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="large-image-wrapper">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 3000
+        | image_tag:
+          loading: 'lazy',
+          width: section.settings.image.width,
+          height: section.settings.image.height,
+          sizes: '100vw',
+          widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000'
+      }}
+    {%- else -%}
+      <img
+        src="{{ 'content1.jpg' | asset_url }} "
+        alt="Middle Image"
+        loading="lazy"
+        width="100%"
+        height="200vh"
+      >
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Large Image & Manifesto",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f4f3f1"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "header",
+      "content": "Manifesto Content"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle / Label",
+      "default": "Manifesto"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "Icon / Logo",
+      "info": "Optional small icon above text"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Manifesto Text",
+      "default": "The designs will speak to an opinionated, cosmopolitan woman who would rather invest in pieces that can be handed down as heirlooms than trends."
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link Text",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "header",
+      "content": "Large Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "vh",
+      "label": "Image Height",
+      "default": 150
+    }
+  ],
+  "presets": [
+    {
+      "name": "Large Image & Manifesto"
+    }
+  ]
+}
+{% endschema %}
