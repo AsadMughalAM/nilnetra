@@ -9,6 +9,7 @@
 .horizontal-scroller .scroller-wrapper {
   display: flex;
   width: fit-content;
+  will-change: transform;
 }
 
 .horizontal-scroller .content {

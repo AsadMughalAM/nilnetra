@@ -148,7 +148,7 @@
         scrollTrigger: {
           trigger: sectionId,
           pin: true,
-          scrub: {{ section.settings.scroll_smoothness | default: 1 }},
+          scrub: {{ section.settings.scroll_smoothness | default: 0 }},
           end: () => '+=' + (scrollWidth - viewportWidth),
           invalidateOnRefresh: true,
         },
@@ -189,11 +189,11 @@
     {
       "type": "range",
       "id": "scroll_smoothness",
-      "min": 0.5,
-      "max": 3,
-      "step": 0.5,
-      "unit": "x",
-      "label": "Scroll Smoothness",
+      "min": 0,
+      "max": 2,
+      "step": 0.1,
+      "unit": "s",
+      "label": "Scroll Smoothness (0 = Instant)",
       "default": 1
     },
     {
