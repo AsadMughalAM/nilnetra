@@ -52,6 +52,10 @@
       "type": "horizontal-scroller",
       "settings": {}
     },
+    "middle_image_section": {
+      "type": "middle-image-section",
+      "settings": {}
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -84,6 +88,7 @@
   "order": [
     "image_banner",
     "featured_collection",
-    "horizontal_scroller"
+    "horizontal_scroller",
+    "middle_image_section"
   ]
 }

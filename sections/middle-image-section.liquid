@@ -1,0 +1,50 @@
+{{ 'middle-image-section.css' | asset_url | stylesheet_tag }}
+
+<section class="middle-image-wrapper" style="height: {{ section.settings.section_height }}vh;">
+  {%- if section.settings.image != blank -%}
+    {{
+      section.settings.image
+      | image_url: width: 2000
+      | image_tag:
+        loading: 'lazy',
+        class: 'middle-centered-image',
+        widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000',
+        sizes: '(min-width: 1000px) 100vw, 100vw'
+    }}
+  {%- else -%}
+    <img
+      src="{{ 'middle-image-section.jpg' | asset_url }}"
+      alt="Middle Image"
+      loading="lazy"
+      class="middle-centered-image"
+    >
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Middle Image Section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Section Height",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Middle Image Section"
+    }
+  ]
+}
+{% endschema %}

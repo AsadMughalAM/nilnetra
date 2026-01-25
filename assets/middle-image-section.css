@@ -1,0 +1,25 @@
+.middle-image-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #222A37;
+}
+
+.middle-centered-image {
+  max-width: 50%;
+  max-height: 50%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .middle-centered-image {
+    max-width: 95%;
+    max-height: 95%;
+  }
+}
