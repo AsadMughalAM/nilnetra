@@ -60,6 +60,10 @@
       "type": "middle-image-section",
       "settings": {}
     },
+    "large_image_display": {
+      "type": "large-image-display",
+      "settings": {}
+    },
     // "featured_collection": {
     //   "type": "featured-collection",
     //   "settings": {
@@ -94,6 +98,7 @@
     // "featured_collection",
     "horizontal_scroller",
     "middle_image_section",
-    "large_image_section"
+    "large_image_section",
+    "large_image_display"
   ]
 }

@@ -1,0 +1,60 @@
+{{ 'large-image-section.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .large-image-wrapper {
+    height: {{ section.settings.image_height }}vh;
+  }
+{%- endstyle -%}
+
+<div class="large-image-section">
+  <div class="large-image-wrapper">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 3000
+        | image_tag:
+          loading: 'lazy',
+          width: section.settings.image.width,
+          height: section.settings.image.height,
+          sizes: '100vw',
+          widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000'
+      }}
+    {%- else -%}
+      <img
+        src="{{ 'content1.jpg' | asset_url }}"
+        alt="Large Image"
+        loading="lazy"
+        width="1920"
+        height="1080"
+      >
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Large Image Display",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "vh",
+      "label": "Image Height",
+      "default": 150
+    }
+  ],
+  "presets": [
+    {
+      "name": "Large Image Display"
+    }
+  ]
+}
+{% endschema %}

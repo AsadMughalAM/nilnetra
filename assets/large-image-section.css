@@ -9,6 +9,7 @@
 
 .large-image-section {
   width: 100%;
+  height: 90vh;
   position: relative;
   z-index: 10; /* Stack on top of previous pinned sections */
   background-color: var(--bg-color, #f4f3f1);
