@@ -64,6 +64,22 @@
       "type": "large-image-display",
       "settings": {}
     },
+    "instagram-grid": {
+      "type": "instagram-grid",
+      "blocks": {
+        "inst-1": { "type": "image", "settings": { "parallax_speed": 4 } },
+        "inst-2": { "type": "image", "settings": { "parallax_speed": 12 } },
+        "inst-3": { "type": "image", "settings": { "parallax_speed": 8 } },
+        "inst-4": { "type": "image", "settings": { "parallax_speed": 6 } },
+        "inst-5": { "type": "image", "settings": { "parallax_speed": 10 } }
+      },
+      "block_order": ["inst-1", "inst-2", "inst-3", "inst-4", "inst-5"],
+      "settings": {
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "enable_overlap": true
+      }
+    },
     // "featured_collection": {
     //   "type": "featured-collection",
     //   "settings": {
@@ -99,6 +115,7 @@
     "horizontal_scroller",
     "middle_image_section",
     "large_image_section",
-    "large_image_display"
+    "large_image_display",
+    "instagram-grid"
   ]
 }

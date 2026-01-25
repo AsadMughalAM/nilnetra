@@ -1,0 +1,148 @@
+/* ================================
+   Instagram Editorial Grid Styles
+   ================================ */
+
+.instagram-grid-section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Main container */
+/* Main container */
+.instagram-grid-container {
+  max-width: 1800px;
+  margin: 0 auto;
+  min-height: 80vh; /* Increased to ensure visibility */
+  padding: 0 2rem;
+  position: relative;
+}
+
+/* ... (omitted content layer styles) ... */
+
+/* ================================
+   Images Wrapper
+   ================================ */
+
+.instagram-images-wrapper {
+  position: absolute; /* Changed to absolute to fill container */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Base image item */
+.instagram-item {
+  position: absolute;
+  will-change: transform;
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+  transition: z-index 0.3s ease;
+}
+
+/* Hover bring front */
+.instagram-item:hover {
+  z-index: 30;
+}
+
+/* ================================
+   Editorial Positions (Desktop)
+   ================================ */
+
+.instagram-item.item-1 {
+  top: 10%;
+  left: 5%;
+  width: 18vw;
+  max-width: 220px;
+}
+
+.instagram-item.item-2 {
+  top: 40%;
+  right: 5%;
+  width: 24vw;
+  max-width: 280px;
+}
+
+.instagram-item.item-3 {
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%); /* Centered properly */
+  width: 28vw;
+  max-width: 320px;
+}
+
+.instagram-item.item-4 {
+  top: 60%;
+  left: 10%;
+  width: 22vw;
+  max-width: 260px;
+}
+
+.instagram-item.item-5 {
+  top: 5%;
+  right: 15%;
+  width: 16vw;
+  max-width: 200px;
+}
+
+/* ================================
+   Image Styles
+   ================================ */
+
+.image-container {
+  overflow: hidden;
+  border-radius: 6px;
+  contain: paint;
+}
+
+.instagram-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform-origin: center;
+  transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.instagram-item:hover .instagram-image {
+  transform: scale(1.08);
+}
+
+/* ================================
+   Mobile Layout
+   ================================ */
+
+@media (max-width: 768px) {
+  .instagram-grid-container {
+    min-height: auto;
+    padding: 4rem 1.5rem;
+  }
+
+  .instagram-content-layer {
+    position: relative;
+    inset: auto;
+    mix-blend-mode: normal;
+    color: inherit;
+    margin-bottom: 3rem;
+  }
+
+  .instagram-images-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .instagram-item {
+    position: relative;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    transform: none !important;
+  }
+
+  /* Visual variation */
+  .instagram-item.item-3,
+  .instagram-item.item-5 {
+    grid-column: span 2;
+  }
+}
