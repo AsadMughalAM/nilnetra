@@ -1,8 +1,25 @@
 {{ 'large-image-section.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  #shopify-section-{{ section.id }} .large-image-wrapper {
+  #shopify-section-{{ section.id }} .large-image-section {
     height: {{ section.settings.image_height }}vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: {{ section.settings.background_color | default: 'transparent' }};
+  }
+  #shopify-section-{{ section.id }} .large-image-wrapper {
+    height: 100%;
+    width: {{ section.settings.image_width }}%;
+    position: relative; /* Ensure absolute child aligns relative to this */
+  }
+  #shopify-section-{{ section.id }} .large-image-img {
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.image_fit }};
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 {%- endstyle -%}
 
@@ -14,6 +31,7 @@
         | image_url: width: 3000
         | image_tag:
           loading: 'lazy',
+          class: 'large-image-img',
           width: section.settings.image.width,
           height: section.settings.image.height,
           sizes: '100vw',
@@ -26,6 +44,7 @@
         loading="lazy"
         width="1920"
         height="1080"
+        class="large-image-img"
       >
     {%- endif -%}
   </div>
@@ -36,9 +55,35 @@
   "name": "Large Image Display",
   "settings": [
     {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "transparent"
+    },
+    {
       "type": "image_picker",
       "id": "image",
       "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image Fit",
+      "options": [
+        { "value": "cover", "label": "Fill (Cover)" },
+        { "value": "contain", "label": "Fit (Contain)" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Image Width",
+      "default": 100
     },
     {
       "type": "range",
