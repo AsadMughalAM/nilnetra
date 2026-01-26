@@ -9,13 +9,7 @@
  */
 {
   "sections": {
-    "fixed_overlay": {
-      "type": "fixed-overlay",
-      "settings": {
-        "text_color": "#000000",
-        "brand_text": "ALICIA MOORE"
-      }
-    },
+
     // "image_banner": {
     //   "type": "image-banner",
     //   "blocks": {
@@ -117,7 +111,7 @@
     // }
   },
   "order": [
-    "fixed_overlay",
+
     // "image_banner",
     // "featured_collection",
     "horizontal_scroller",
