@@ -2,8 +2,46 @@
 
 {%- style -%}
   #shopify-section-{{ section.id }} .large-image-section {
-    --bg-color: {{ section.settings.bg_color }};
-    --text-color: {{ section.settings.text_color }};
+    background-color: {{ section.settings.bg_color | default: '#f4f3f1' }};
+    height: {{ section.settings.section_height }}vh;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .manifesto-label {
+    color: {{ section.settings.subtitle_color }};
+    font-size: {{ section.settings.subtitle_size }}px;
+    text-align: {{ section.settings.subtitle_alignment }};
+    margin-bottom: 2rem;
+  }
+
+  #shopify-section-{{ section.id }} .manifesto-heading {
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size }}px;
+    text-align: {{ section.settings.heading_alignment }};
+    line-height: 1.2;
+  }
+
+  /* Responsive Font Size for Heading */
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .manifesto-heading {
+      font-size: max(24px, calc({{ section.settings.heading_size }}px * 0.6));
+    }
+    #shopify-section-{{ section.id }} .large-image-section {
+      height: auto;
+      min-height: {{ section.settings.section_height }}vh;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .manifesto-link-wrapper {
+    text-align: {{ section.settings.link_alignment }};
+    margin-top: 2rem;
+  }
+
+  #shopify-section-{{ section.id }} .manifesto-link {
+    color: {{ section.settings.link_color }};
+    font-size: {{ section.settings.link_size }}px;
+    border-color: {{ section.settings.link_color }};
   }
 {%- endstyle -%}
 
@@ -13,20 +51,25 @@
 
     <div class="manifesto-body">
       {%- if section.settings.icon != blank -%}
-        <img
-          src="{{ section.settings.icon | image_url: width: 100 }}"
-          width="100"
-          height="100"
-          class="manifesto-icon"
-          alt=""
-          loading="lazy"
-        >
+        <div style="text-align: {{ section.settings.heading_alignment }};">
+          <img
+            src="{{ section.settings.icon | image_url: width: 100 }}"
+            width="100"
+            height="100"
+            class="manifesto-icon"
+            alt=""
+            loading="lazy"
+            style="display: inline-block;"
+          >
+        </div>
       {%- endif -%}
 
       <h2 class="manifesto-heading">{{ section.settings.title }}</h2>
 
       {%- if section.settings.link_text != blank -%}
-        <a href="{{ section.settings.link_url }}" class="manifesto-link">{{ section.settings.link_text }}</a>
+        <div class="manifesto-link-wrapper">
+          <a href="{{ section.settings.link_url }}" class="manifesto-link">{{ section.settings.link_text }}</a>
+        </div>
       {%- endif -%}
     </div>
   </div>
@@ -38,7 +81,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Colors"
+      "content": "Section Dimensions & Color"
     },
     {
       "type": "color",
@@ -47,43 +90,159 @@
       "default": "#f4f3f1"
     },
     {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text Color",
-      "default": "#1a1a1a"
+      "type": "range",
+      "id": "section_height",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Section Height",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
     },
     {
       "type": "header",
-      "content": "Manifesto Content"
+      "content": "Subtitle (Label)"
     },
     {
       "type": "text",
       "id": "subtitle",
-      "label": "Subtitle / Label",
+      "label": "Content",
       "default": "Manifesto"
     },
     {
-      "type": "image_picker",
-      "id": "icon",
-      "label": "Icon / Logo",
-      "info": "Optional small icon above text"
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "subtitle_alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
     },
     {
       "type": "textarea",
       "id": "title",
-      "label": "Manifesto Text",
-      "default": "The designs will speak to an opinionated, cosmopolitan woman who would rather invest in pieces that can be handed down as heirlooms than trends."
+      "label": "Content",
+      "default": "The designs will speak to an opinionated, cosmopolitan woman."
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 24,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 48
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Link"
     },
     {
       "type": "text",
       "id": "link_text",
-      "label": "Link Text",
+      "label": "Label",
       "default": "Learn more"
     },
     {
       "type": "url",
       "id": "link_url",
-      "label": "Link URL"
+      "label": "URL"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "link_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "link_alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
     }
   ],
   "presets": [
