@@ -1,6 +1,12 @@
 {{ 'middle-image-section.css' | asset_url | stylesheet_tag }}
 
-<section class="middle-image-wrapper middle-image-section">
+{%- style -%}
+  #middle-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color | default: '#222A37' }};
+  }
+{%- endstyle -%}
+
+<section id="middle-section-{{ section.id }}" class="middle-image-wrapper middle-image-section">
   {%- if section.settings.image != blank -%}
     {{
       section.settings.image
@@ -27,6 +33,12 @@
 {
   "name": "Middle Image Section",
   "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#222A37"
+    },
     {
       "type": "image_picker",
       "id": "image",
