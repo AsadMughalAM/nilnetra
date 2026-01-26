@@ -118,13 +118,7 @@
     padding: 4rem 1.5rem;
   }
 
-  .instagram-content-layer {
-    position: relative;
-    inset: auto;
-    mix-blend-mode: normal;
-    color: inherit;
-    margin-bottom: 3rem;
-  }
+
 
   .instagram-images-wrapper {
     display: grid;

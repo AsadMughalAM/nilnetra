@@ -3,7 +3,7 @@
 {%- style -%}
   #shopify-section-{{ section.id }} {
     background: {{ section.settings.bg_color }};
-    color: {{ section.settings.text_color }};
+
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
     {% if section.settings.enable_overlap %}
@@ -17,33 +17,41 @@
 <section class="instagram-grid-section" id="InstagramGrid-{{ section.id }}">
   <div class="instagram-grid-container">
     <!-- Center Content -->
-    
-      <div class="instagram-content-layer">
-        {% if section.settings.title != blank %}
-          <h2 class="instagram-heading">{{ section.settings.title }}</h2>
-        {% endif %}
-
-        {% if section.settings.link_label != blank and section.settings.link_url != blank %}
-          <a class="instagram-cta" href="{{ section.settings.link_url }}" target="_blank">
-            {{ section.settings.link_label }}
-          </a>
-        {% endif %}
-      </div>
-    
 
     <!-- Images -->
     <div class="instagram-images-wrapper">
       {% for block in section.blocks %}
+        {%- capture custom_styles -%}
+          {%- if block.settings.enable_custom -%}
+            top: {{ block.settings.top }}%;
+            left: {{ block.settings.left }}%;
+            right: auto;
+            width: {{ block.settings.width }}vw;
+            max-width: none;
+            {% if block.settings.height > 0 %}height: {{ block.settings.height }}px;{% endif %}
+          {%- endif -%}
+        {%- endcapture -%}
+
+        {%- capture image_styles -%}
+          {%- if block.settings.enable_custom and block.settings.height > 0 -%}
+            height: 100%; object-fit: {{ block.settings.object_fit }};
+          {%- endif -%}
+        {%- endcapture -%}
+
         <div
           class="instagram-item item-{{ forloop.index }} parallax-item"
           data-speed="{{ block.settings.parallax_speed }}"
+          style="{{ custom_styles }}"
           {{ block.shopify_attributes }}
         >
           {% if block.settings.link != blank %}
             <a href="{{ block.settings.link }}" target="_blank" class="instagram-link">
           {% endif %}
 
-          <div class="image-container">
+          <div
+            class="image-container"
+            style="{% if block.settings.enable_custom and block.settings.height > 0 %}height: 100%;{% endif %}"
+          >
             {% if block.settings.image %}
               {{
                 block.settings.image
@@ -52,7 +60,8 @@
                   class: 'instagram-image',
                   loading: 'lazy',
                   widths: '300,600,900',
-                  sizes: '(min-width: 768px) 25vw, 50vw'
+                  sizes: '(min-width: 768px) 25vw, 50vw',
+                  style: image_styles
               }}
             {% else %}
               {% assign img_index = forloop.index0 | modulo: 4 | plus: 1 %}
@@ -64,7 +73,7 @@
                 loading="lazy"
                 width="800"
                 height="1000"
-                style="object-fit: cover;"
+                style="object-fit: cover; {{ image_styles }}"
               >
             {% endif %}
           </div>
@@ -148,29 +157,6 @@
       "default": "#f6f5f2"
     },
     {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text Color",
-      "default": "#000000"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Heading",
-      "default": "Instagram"
-    },
-    {
-      "type": "text",
-      "id": "link_label",
-      "label": "Link Label",
-      "default": "@yourbrand"
-    },
-    {
-      "type": "url",
-      "id": "link_url",
-      "label": "Instagram URL"
-    },
-    {
       "type": "range",
       "id": "padding_top",
       "label": "Padding Top",
@@ -199,6 +185,67 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "header",
+          "content": "Custom Layout Override",
+          "info": "Enable to override default grid position and size"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_custom",
+          "label": "Enable Custom Layout",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "width",
+          "min": 5,
+          "max": 50,
+          "step": 1,
+          "unit": "vw",
+          "label": "Width",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "height",
+          "min": 0,
+          "max": 800,
+          "step": 10,
+          "unit": "px",
+          "label": "Fixed Height (0 = Auto)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Top Position",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Left Position",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "object_fit",
+          "label": "Image Fit",
+          "options": [
+            { "value": "cover", "label": "Fill (Cover)" },
+            { "value": "contain", "label": "Fit (Contain)" }
+          ],
+          "default": "cover"
         },
         {
           "type": "url",
