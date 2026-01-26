@@ -21,17 +21,15 @@
 }
 
 .middle-centered-image {
-  max-width: 50%;
-  max-height: 50%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  width: 50%;
+  height: 70%;
+  object-fit: cover;
   display: block;
 }
 
 @media (max-width: 768px) {
   .middle-centered-image {
-    max-width: 50%;
-    max-height: 50%;
+    width: 80%;
+    height: 50%;
   }
 }

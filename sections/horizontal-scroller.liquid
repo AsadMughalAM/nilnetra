@@ -141,6 +141,9 @@
     'use strict';
 
     function initHorizontalScroller_{{ section.id | replace: '-', '_' }}() {
+      // Kill existing ScrollTriggers to prevent duplicates/memory leaks on re-init
+      ScrollTrigger.getAll().forEach(t => t.kill());
+
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         setTimeout(initHorizontalScroller_{{ section.id | replace: '-', '_' }}, 100);
         return;
@@ -275,11 +278,19 @@
       });
     }
 
+    // Initialize on load
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initHorizontalScroller_{{ section.id | replace: '-', '_' }});
     } else {
       initHorizontalScroller_{{ section.id | replace: '-', '_' }}();
     }
+
+    // Handle Shopify Theme Editor events
+    document.addEventListener('shopify:section:load', function(event) {
+      // Re-init if this section or related sections are reloaded
+      console.log('Shopify section loaded, refreshing ScrollTrigger', event.target);
+      setTimeout(initHorizontalScroller_{{ section.id | replace: '-', '_' }}, 100);
+    });
   })();
 </script>
 
