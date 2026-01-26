@@ -1,15 +1,18 @@
 {%- style -%}
   .fixed-overlay-section {
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100vh;
-    z-index: 900; /* High z-index but below mobile menu/cart drawer (usually 1000+) */
-    pointer-events: none; /* Let clicks pass through to content */
-    color: {{ section.settings.text_color }};
+    z-index: 900;
+    pointer-events: none;
+    color: var(--overlay-color, #ffffff);
+    transition: color 0.3s ease;
   }
 
+  /* =========================
+   OVERLAY LAYOUT
+========================= */
   .overlay-content {
     position: relative;
     width: 100%;
@@ -18,7 +21,7 @@
 
   .overlay-item {
     position: absolute;
-    pointer-events: auto; /* Re-enable clicks for links */
+    pointer-events: auto;
     font-family: sans-serif;
     font-size: 0.9rem;
     text-transform: uppercase;
@@ -29,14 +32,15 @@
   .overlay-item a {
     color: inherit;
     text-decoration: none;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s ease;
   }
-
   .overlay-item a:hover {
     opacity: 0.7;
   }
 
-  /* Top Left: Navigation */
+  /* =========================
+   TOP / BOTTOM
+========================= */
   .overlay-top-left {
     top: 2rem;
     left: 2rem;
@@ -44,39 +48,103 @@
     gap: 1.5rem;
   }
 
-  /* Bottom Left: Bag */
   .overlay-bottom-left {
     bottom: 2rem;
     left: 2rem;
   }
 
-  /* Middle Right: Brand Name */
-  .overlay-middle-right {
+  /* =========================
+   MIDDLE LEFT (TEXT → LOGO)
+========================= */
+  .overlay-middle-left {
     top: 50%;
-    right: 2rem;
+    left: 2rem;
     transform: translateY(-50%);
-    /* Optional: Vertical writing mode if requested, but default normal */
-    /* writing-mode: vertical-rl; */
-    text-align: right;
+  }
+
+  .brand-logo-container {
+    position: relative;
+    display: flex;
+    align-items: center;
   }
 
   .fixed-brand-name {
-    margin: 0;
-    font-family: "Times New Roman", Times, serif; /* Editorial look */
+    font-family: 'Times New Roman', Times, serif;
     font-size: 1.2rem;
     letter-spacing: 0.1em;
+    white-space: nowrap;
+    transition: opacity 0.4s ease;
   }
 
+  .fixed-brand-logo {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    height: 30px;
+    transition: opacity 0.4s ease, filter 0.3s ease;
+  }
+
+  .fixed-brand-logo img {
+    height: 100%;
+    width: auto;
+    display: block;
+  }
+
+  /* =========================
+   MIDDLE RIGHT CTA
+========================= */
+  .overlay-middle-right-cta {
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+  }
+
+  .cta-text {
+    transition: opacity 0.3s ease;
+  }
+
+  /* =========================
+   STATES
+========================= */
+
+  /* Show Logo (Middle Image + onward) */
+  .state-show-logo .fixed-brand-name {
+    opacity: 0;
+  }
+  .state-show-logo .fixed-brand-logo {
+    opacity: 1;
+  }
+
+  /* LIGHT BACKGROUND (Large Image Sections) */
+  .theme-light-bg {
+    --overlay-color: #000000;
+  }
+
+  /* Logo becomes BLACK */
+  .theme-light-bg .fixed-brand-logo {
+    filter: brightness(0);
+  }
+
+  /* CTA stays WHITE on light bg */
+  .theme-light-bg .overlay-middle-right-cta {
+    color: #ffffff !important;
+  }
+
+  /* =========================
+   RESPONSIVE
+========================= */
   @media (max-width: 768px) {
     .fixed-overlay-section {
-      display: none; /* Often hidden on mobile to save space */
+      display: none;
     }
   }
 {%- endstyle -%}
 
 <div class="fixed-overlay-section" id="FixedOverlay-{{ section.id }}">
   <div class="overlay-content">
-    <!-- Top Left Corner: Menu -->
+    <!-- TOP LEFT MENU -->
     <div class="overlay-item overlay-top-left">
       {% if section.settings.menu != blank %}
         {% for link in linklists[section.settings.menu].links %}
@@ -89,25 +157,107 @@
       {% endif %}
     </div>
 
-    <!-- Bottom Left Corner: Bag -->
+    <!-- BOTTOM LEFT BAG -->
     <div class="overlay-item overlay-bottom-left">
-      <a href="{{ routes.cart_url }}" class="fixed-bag-link"> Bag ({{ cart.item_count }}) </a>
+      <a href="{{ routes.cart_url }}">Bag ({{ cart.item_count }})</a>
     </div>
 
-    <!-- Middle Right Corner: Brand Name (Fixed) -->
-    <div class="overlay-item overlay-middle-right">
-      <h2 class="fixed-brand-name">{{ section.settings.brand_text | default: shop.name }}</h2>
+    <!-- MIDDLE LEFT BRAND -->
+    <div class="overlay-middle-left">
+      <div class="brand-logo-container">
+        <h2 class="fixed-brand-name">
+          {{ section.settings.brand_text | default: 'ALICIA MOORE' }}
+        </h2>
+
+        <div class="fixed-brand-logo">
+          {% if section.settings.logo != blank %}
+            {{ section.settings.logo | image_url: height: 60 | image_tag }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- MIDDLE RIGHT CTA -->
+    <div class="overlay-item overlay-middle-right-cta">
+      <a href="#" class="cta-text" id="OverlayCTA">
+        {{ section.settings.cta_text_1 | default: 'Explore the New Collection' }}
+      </a>
     </div>
   </div>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Move this section to body to avoid GSAP ScrollSmoother transform conflicts
+  document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('FixedOverlay-{{ section.id }}');
-    if (overlay) {
-      document.body.appendChild(overlay);
-    }
+    document.body.appendChild(overlay);
+
+    const init = () => {
+      if (!window.gsap || !window.ScrollTrigger) {
+        setTimeout(init, 100);
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const cta = document.getElementById('OverlayCTA');
+
+      const txt1 = "{{ section.settings.cta_text_1 | default: 'Explore the New Collection' }}";
+      const txt2 = "{{ section.settings.cta_text_2 | default: 'Shop Collection' }}";
+
+      const setCTA = (text) => {
+        if (cta.innerText === text) return;
+        gsap.to(cta, {
+          opacity: 0,
+          duration: 0.2,
+          onComplete: () => {
+            cta.innerText = text;
+            gsap.to(cta, { opacity: 1, duration: 0.2 });
+          },
+        });
+      };
+
+      /* DEFAULT (HORIZONTAL SCROLLER) */
+      overlay.classList.remove('state-show-logo', 'theme-light-bg');
+      setCTA(txt1);
+
+      /* MIDDLE IMAGE SECTION */
+      ScrollTrigger.create({
+        trigger: '.middle-image-section',
+        start: 'top 60%',
+        end: 'bottom 60%',
+        onEnter: () => {
+          overlay.classList.add('state-show-logo');
+          overlay.classList.remove('theme-light-bg');
+          setCTA(txt2);
+        },
+        onLeaveBack: () => {
+          overlay.classList.remove('state-show-logo', 'theme-light-bg');
+          setCTA(txt1);
+        },
+      });
+
+      /* LARGE IMAGE + DISPLAY SECTIONS */
+      gsap.utils.toArray('.large-image-section, .large-image-display').forEach((section) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 60%',
+          end: 'bottom 60%',
+          onEnter: () => {
+            overlay.classList.add('state-show-logo', 'theme-light-bg');
+            setCTA(txt2);
+          },
+          onLeaveBack: () => {
+            overlay.classList.remove('theme-light-bg');
+          },
+          onEnterBack: () => {
+            overlay.classList.add('theme-light-bg');
+          },
+        });
+      });
+    };
+
+    init();
+    document.addEventListener('shopify:section:load', init);
   });
 </script>
 
@@ -115,28 +265,12 @@
 {
   "name": "Fixed Overlay Layout",
   "settings": [
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "Top Left Menu"
-    },
-    {
-      "type": "text",
-      "id": "brand_text",
-      "label": "Right Side Brand Text",
-      "default": "ALICIA MOORE"
-    }
+    { "type": "link_list", "id": "menu", "label": "Menu" },
+    { "type": "text", "id": "brand_text", "label": "Brand Text", "default": "ALICIA MOORE" },
+    { "type": "image_picker", "id": "logo", "label": "Brand Logo" },
+    { "type": "text", "id": "cta_text_1", "label": "CTA (Default)", "default": "Explore the New Collection" },
+    { "type": "text", "id": "cta_text_2", "label": "CTA (Secondary)", "default": "Shop Collection" }
   ],
-  "presets": [
-    {
-      "name": "Fixed Overlay Layout"
-    }
-  ]
+  "presets": [{ "name": "Fixed Overlay Layout" }]
 }
 {% endschema %}
