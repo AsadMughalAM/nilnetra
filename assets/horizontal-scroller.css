@@ -25,12 +25,12 @@
 
 /* Single Image styling */
 .horizontal-scroller .content .panel-image {
-  max-width: 80%;
+  max-width: 40%;
   max-height: 100vh;
   width: auto;
   height: 100vh;
-  object-fit: contain;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  object-fit: cover;
+  aspect-ratio: 3 / 2;
 }
 
 /* Split Layout for Panel 2 */
@@ -64,8 +64,9 @@
   max-width: 100%;
   max-height: 60vh;
   width: 100%;
-  height: auto;
+  height: 60vh;
   object-fit: cover;
+  aspect-ratio: 4 / 3;
 }
 
 /* Right image - larger, takes more space */
@@ -73,8 +74,9 @@
   max-width: 100%;
   max-height: 90vh;
   width: 60%;
-  height: auto;
+  height: 90vh;
   object-fit: cover;
+  aspect-ratio: 3 / 2;
 }
 
 /* Panel 3 specific styling */
