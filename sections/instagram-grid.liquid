@@ -42,26 +42,24 @@
           class="instagram-item item-{{ forloop.index }} parallax-item"
           data-speed="{{ block.settings.parallax_speed }}"
           style="{{ custom_styles }}"
-          {{ block.shopify_attributes }}
-        >
+          {{ block.shopify_attributes }}>
           {% if block.settings.link != blank %}
-            <a href="{{ block.settings.link }}" target="_blank" class="instagram-link">
+            <a
+              href="{{ block.settings.link }}"
+              target="_blank"
+              class="instagram-link">
           {% endif %}
 
-          <div
-            class="image-container"
-            style="{% if block.settings.enable_custom and block.settings.height > 0 %}height: 100%;{% endif %}"
-          >
+          <div class="image-container" style="{% if block.settings.enable_custom and block.settings.height > 0 %}height: 100%;{% endif %}">
             {% if block.settings.image %}
-              {{
-                block.settings.image
-                | image_url: width: 900
-                | image_tag:
-                  class: 'instagram-image',
-                  loading: 'lazy',
-                  widths: '300,600,900',
-                  sizes: '(min-width: 768px) 25vw, 50vw',
-                  style: image_styles
+              {{ block.settings.image
+ | image_url: width: 900
+ | image_tag:
+ class: 'instagram-image',
+ loading: 'lazy',
+ widths: '300,600,900',
+ sizes: '(min-width: 768px) 25vw, 50vw',
+ style: image_styles
               }}
             {% else %}
               {% assign img_index = forloop.index0 | modulo: 4 | plus: 1 %}
@@ -73,8 +71,7 @@
                 loading="lazy"
                 width="800"
                 height="1000"
-                style="object-fit: cover; {{ image_styles }}"
-              >
+                style="object-fit: cover; {{ image_styles }}">
             {% endif %}
           </div>
 
@@ -90,17 +87,17 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     gsap.registerPlugin(ScrollTrigger);
-
+  
     const section = document.querySelector('#InstagramGrid-{{ section.id }}');
     const items = section.querySelectorAll('.parallax-item');
-
+  
     let mm = gsap.matchMedia();
-
+  
     // Desktop Parallax + Stack
     mm.add('(min-width: 769px)', () => {
       items.forEach((item, i) => {
         const speed = Number(item.dataset.speed) || 6;
-
+  
         gsap.fromTo(
           item,
           {
@@ -117,13 +114,13 @@
               trigger: section,
               start: 'top bottom',
               end: 'bottom top',
-              scrub: true,
+              scrub: 1.5, // Added numeric scrub for extra smoothness
             },
           }
         );
       });
     });
-
+  
     // Mobile Fade
     mm.add('(max-width: 768px)', () => {
       gsap.from(items, {
@@ -141,141 +138,147 @@
 </script>
 
 {% schema %}
-{
-  "name": "Instagram Editorial Grid",
-  "settings": [
-    {
-      "type": "checkbox",
-      "id": "enable_overlap",
-      "label": "Overlap previous section",
-      "default": false
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
-      "default": "#f6f5f2"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Padding Top",
-      "min": 0,
-      "max": 200,
-      "step": 4,
-      "default": 120
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Padding Bottom",
-      "min": 0,
-      "max": 200,
-      "step": 4,
-      "default": 120
-    }
-  ],
-  "blocks": [
-    {
-      "type": "image",
-      "name": "Image",
-      "limit": 6,
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "header",
-          "content": "Custom Layout Override",
-          "info": "Enable to override default grid position and size"
-        },
-        {
-          "type": "checkbox",
-          "id": "enable_custom",
-          "label": "Enable Custom Layout",
-          "default": false
-        },
-        {
-          "type": "range",
-          "id": "width",
-          "min": 5,
-          "max": 50,
-          "step": 1,
-          "unit": "vw",
-          "label": "Width",
-          "default": 20
-        },
-        {
-          "type": "range",
-          "id": "height",
-          "min": 0,
-          "max": 800,
-          "step": 10,
-          "unit": "px",
-          "label": "Fixed Height (0 = Auto)",
-          "default": 0
-        },
-        {
-          "type": "range",
-          "id": "top",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Top Position",
-          "default": 0
-        },
-        {
-          "type": "range",
-          "id": "left",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Left Position",
-          "default": 0
-        },
-        {
-          "type": "select",
-          "id": "object_fit",
-          "label": "Image Fit",
-          "options": [
-            { "value": "cover", "label": "Fill (Cover)" },
-            { "value": "contain", "label": "Fit (Contain)" }
-          ],
-          "default": "cover"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Image Link"
-        },
-        {
-          "type": "range",
-          "id": "parallax_speed",
-          "label": "Parallax Speed",
-          "min": 2,
-          "max": 20,
-          "step": 1,
-          "default": 6
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Instagram Editorial Grid",
-      "blocks": [
-        { "type": "image" },
-        { "type": "image" },
-        { "type": "image" },
-        { "type": "image" },
-        { "type": "image" },
-        { "type": "image" }
-      ]
-    }
-  ]
-}
+  {
+    "name": "Instagram Editorial Grid",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_overlap",
+        "label": "Overlap previous section",
+        "default": false
+      }, {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#f6f5f2"
+      }, {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "default": 120
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding Bottom",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "default": 120
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "limit": 6,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "header",
+            "content": "Custom Layout Override",
+            "info": "Enable to override default grid position and size"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_custom",
+            "label": "Enable Custom Layout",
+            "default": false
+          },
+          {
+            "type": "range",
+            "id": "width",
+            "min": 5,
+            "max": 50,
+            "step": 1,
+            "unit": "vw",
+            "label": "Width",
+            "default": 20
+          }, {
+            "type": "range",
+            "id": "height",
+            "min": 0,
+            "max": 800,
+            "step": 10,
+            "unit": "px",
+            "label": "Fixed Height (0 = Auto)",
+            "default": 0
+          }, {
+            "type": "range",
+            "id": "top",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "%",
+            "label": "Top Position",
+            "default": 0
+          }, {
+            "type": "range",
+            "id": "left",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "%",
+            "label": "Left Position",
+            "default": 0
+          }, {
+            "type": "select",
+            "id": "object_fit",
+            "label": "Image Fit",
+            "options": [
+              {
+                "value": "cover",
+                "label": "Fill (Cover)"
+              }, {
+                "value": "contain",
+                "label": "Fit (Contain)"
+              }
+            ],
+            "default": "cover"
+          }, {
+            "type": "url",
+            "id": "link",
+            "label": "Image Link"
+          }, {
+            "type": "range",
+            "id": "parallax_speed",
+            "label": "Parallax Speed",
+            "min": 2,
+            "max": 20,
+            "step": 1,
+            "default": 6
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Instagram Editorial Grid",
+        "blocks": [
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          }, {
+            "type": "image"
+          }, {
+            "type": "image"
+          }
+        ]
+      }
+    ]
+  }
 {% endschema %}

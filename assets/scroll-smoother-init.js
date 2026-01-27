@@ -16,14 +16,14 @@
       const smoother = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
-        smooth: 2, // Smoothness level (0-3, higher = smoother)
+        smooth: 1.5, // Reduced slightly for better responsiveness (1.5 is the sweet spot)
         effects: true, // Enable data-speed and data-lag effects
         smoothTouch: 0.1, // Smooth scrolling on touch devices
-        normalizeScroll: false, // Changed to false to avoid conflicts with horizontal scroller
+        normalizeScroll: { allowNestedScroll: true }, // Optimized normalization to prevent "stuck" feeling
         ignoreMobileResize: true, // Prevent issues on mobile resize
       });
 
-      console.log("✅ GSAP ScrollSmoother initialized");
+      console.log("✅ GSAP ScrollSmoother initialized (Optimized)");
 
       // Expose smoother globally for debugging
       window.smoother = smoother;
