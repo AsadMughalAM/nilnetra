@@ -1,53 +1,73 @@
 {{ 'custom-footer.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  .custom-footer {
+  #shopify-section-{{ section.id }} .custom-footer {
     background-color: {{ section.settings.bg_color | default: '#f6f5f2' }};
+    background-image: none !important;
+    /* Force override any CSS gradients */
     color: {{ section.settings.text_color | default: '#000000' }};
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
-    border-top: 1px solid {{ section.settings.border_color }};
+    border-top: 1px solid{{ section.settings.border_color | default: '#e5e5e5' }};
   }
 
+  #shopify-section-{{ section.id }}
   .footer-brand-heading {
     color: {{ section.settings.brand_color | default: section.settings.text_color }};
     font-size: {{ section.settings.brand_size_desktop }}px;
   }
 
   @media (max-width: 768px) {
-    .footer-brand-heading {
+    #shopify-section-{{ section.id }} .footer-brand-heading {
       font-size: {{ section.settings.brand_size_mobile }}px;
     }
   }
 
+  #shopify-section-{{ section.id }}
   .custom-footer a {
     color: {{ section.settings.link_color | default: section.settings.text_color }};
     font-size: {{ section.settings.link_size }}px;
     text-transform: {{ section.settings.link_transform }};
   }
 
-  .custom-footer a:hover {
-    color: {{ section.settings.link_hover_color }};
+  #shopify-section-{{ section.id }}.custom-footer a:hover {
+    color: {{ section.settings.link_hover_color | default: '#555555' }};
+    opacity: 1;
   }
 
+  #shopify-section-{{ section.id }}
   .newsletter-label {
+    color: {{ section.settings.text_color }};
     font-size: {{ section.settings.link_size }}px;
     text-transform: {{ section.settings.link_transform }};
     opacity: 0.7;
   }
 
-  .newsletter-input-wrapper input {
-    color: {{ section.settings.text_color }};
-    border-bottom: 1px solid {{ section.settings.border_color }};
+  #shopify-section-{{ section.id }}
+  .newsletter-input-wrapper {
+    border-color: {{ section.settings.border_color | default: '#ccc' }};
   }
 
+  #shopify-section-{{ section.id }}
+  .newsletter-input-wrapper input {
+    color: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }}
   .newsletter-input-wrapper input::placeholder {
     color: {{ section.settings.text_color }};
     opacity: 0.5;
   }
 
+  #shopify-section-{{ section.id }}
   .newsletter-arrow {
     color: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }}
+  .copyright {
+    color: {{ section.settings.text_color }};
+    opacity: 0.6;
   }
 {%- endstyle -%}
 
@@ -72,9 +92,15 @@
               <a href="{{ link.url }}">{{ link.title }}</a>
             </li>
           {% else %}
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Stockists</a></li>
+            <li>
+              <a href="#">About</a>
+            </li>
+            <li>
+              <a href="#">Contact</a>
+            </li>
+            <li>
+              <a href="#">Stockists</a>
+            </li>
           {% endfor %}
         </ul>
       </div>
@@ -88,9 +114,15 @@
               <a href="{{ link.url }}">{{ link.title }}</a>
             </li>
           {% else %}
-            <li><a href="#">Shipping</a></li>
-            <li><a href="#">Returns and Exchanges</a></li>
-            <li><a href="#">Customer Service</a></li>
+            <li>
+              <a href="#">Shipping</a>
+            </li>
+            <li>
+              <a href="#">Returns and Exchanges</a>
+            </li>
+            <li>
+              <a href="#">Customer Service</a>
+            </li>
           {% endfor %}
         </ul>
       </div>
@@ -107,10 +139,18 @@
               <a href="{{ link.url }}">{{ link.title }}</a>
             </li>
           {% else %}
-            <li><a href="#">Terms and Conditions</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Accessibility</a></li>
-            <li><a href="#">Cookie Policy</a></li>
+            <li>
+              <a href="#">Terms and Conditions</a>
+            </li>
+            <li>
+              <a href="#">Privacy Policy</a>
+            </li>
+            <li>
+              <a href="#">Accessibility</a>
+            </li>
+            <li>
+              <a href="#">Cookie Policy</a>
+            </li>
           {% endfor %}
         </ul>
       </div>
@@ -119,24 +159,36 @@
       <div class="nav-group mt-large">
         <ul class="social-links">
           {% if section.settings.instagram_url != blank %}
-            <li><a href="{{ section.settings.instagram_url }}">Instagram</a></li>
+            <li>
+              <a href="{{ section.settings.instagram_url }}">Instagram</a>
+            </li>
           {% endif %}
 
           {% if section.settings.facebook_url != blank %}
-            <li><a href="{{ section.settings.facebook_url }}">Facebook</a></li>
+            <li>
+              <a href="{{ section.settings.facebook_url }}">Facebook</a>
+            </li>
           {% endif %}
 
           {% if section.settings.linkedin_url != blank %}
-            <li><a href="{{ section.settings.linkedin_url }}">LinkedIn</a></li>
+            <li>
+              <a href="{{ section.settings.linkedin_url }}">LinkedIn</a>
+            </li>
           {% endif %}
 
           {% if section.settings.twitter_url != blank %}
-            <li><a href="{{ section.settings.twitter_url }}">Twitter</a></li>
+            <li>
+              <a href="{{ section.settings.twitter_url }}">Twitter</a>
+            </li>
           {% endif %}
 
           {% if section.settings.instagram_url == blank and section.settings.facebook_url == blank %}
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">Facebook</a></li>
+            <li>
+              <a href="#">Instagram</a>
+            </li>
+            <li>
+              <a href="#">Facebook</a>
+            </li>
           {% endif %}
         </ul>
       </div>
@@ -146,14 +198,14 @@
     <div class="footer-col col-3">
       <div class="newsletter-wrapper">
         <span class="newsletter-label">{{ section.settings.newsletter_title | default: 'Newsletter' }}</span>
-        {% form 'customer', class: 'custom-newsletter-form' %}
+        {% form 'customer'
+          , class: 'custom-newsletter-form' %}
           <div class="newsletter-input-wrapper">
             <input
               type="email"
               name="contact[email]"
               placeholder="{{ section.settings.newsletter_placeholder | default: 'Email Address' }}"
-              required
-            >
+              required>
             <button type="submit" class="newsletter-arrow">→</button>
           </div>
         {% endform %}
@@ -171,8 +223,7 @@
               alt="Brand Icon"
               width="60"
               height="60"
-              loading="lazy"
-            >
+              loading="lazy">
           </div>
         {% endif %}
       </div>
@@ -181,193 +232,175 @@
 </footer>
 
 {% schema %}
-{
-  "name": "Custom Footer",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Layout & Spacing"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 200,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding Top",
-      "default": 80
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 200,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding Bottom",
-      "default": 80
-    },
-    {
-      "type": "header",
-      "content": "Colors"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
-      "default": "#f6f5f2"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text Main Color",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "border_color",
-      "label": "Border/Line Color",
-      "default": "#e5e5e5"
-    },
-    {
-      "type": "color",
-      "id": "brand_color",
-      "label": "Brand Heading Color",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "link_color",
-      "label": "Link Color",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "link_hover_color",
-      "label": "Link Hover Color",
-      "default": "#555555"
-    },
-    {
-      "type": "header",
-      "content": "Brand Identity"
-    },
-    {
-      "type": "text",
-      "id": "brand_name",
-      "label": "Brand Headline",
-      "default": "MAGDA BUTRYM"
-    },
-    {
-      "type": "range",
-      "id": "brand_size_desktop",
-      "min": 40,
-      "max": 200,
-      "step": 5,
-      "unit": "px",
-      "label": "Headline Size (Desktop)",
-      "default": 120
-    },
-    {
-      "type": "range",
-      "id": "brand_size_mobile",
-      "min": 20,
-      "max": 100,
-      "step": 2,
-      "unit": "px",
-      "label": "Headline Size (Mobile)",
-      "default": 40
-    },
-    {
-      "type": "image_picker",
-      "id": "brand_icon",
-      "label": "Brand Icon (Bottom Right)"
-    },
-    {
-      "type": "header",
-      "content": "Navigation Menus"
-    },
-    {
-      "type": "link_list",
-      "id": "menu_1",
-      "label": "Menu 1 (Top Left)"
-    },
-    {
-      "type": "link_list",
-      "id": "menu_2",
-      "label": "Menu 2 (Bottom Left)"
-    },
-    {
-      "type": "link_list",
-      "id": "menu_legal",
-      "label": "Legal Menu (Top Middle)"
-    },
-    {
-      "type": "range",
-      "id": "link_size",
-      "min": 10,
-      "max": 24,
-      "step": 1,
-      "unit": "px",
-      "label": "Link Font Size",
-      "default": 12
-    },
-    {
-      "type": "select",
-      "id": "link_transform",
-      "label": "Link Text Style",
-      "options": [
-        { "value": "uppercase", "label": "Uppercase" },
-        { "value": "capitalize", "label": "Capitalize" },
-        { "value": "none", "label": "Normal" }
-      ],
-      "default": "uppercase"
-    },
-    {
-      "type": "header",
-      "content": "Social Links"
-    },
-    {
-      "type": "url",
-      "id": "instagram_url",
-      "label": "Instagram URL"
-    },
-    {
-      "type": "url",
-      "id": "facebook_url",
-      "label": "Facebook URL"
-    },
-    {
-      "type": "url",
-      "id": "linkedin_url",
-      "label": "LinkedIn URL"
-    },
-    {
-      "type": "url",
-      "id": "twitter_url",
-      "label": "Twitter URL"
-    },
-    {
-      "type": "header",
-      "content": "Newsletter"
-    },
-    {
-      "type": "text",
-      "id": "newsletter_title",
-      "label": "Newsletter Label",
-      "default": "Newsletter"
-    },
-    {
-      "type": "text",
-      "id": "newsletter_placeholder",
-      "label": "Placeholder Text",
-      "default": "Email Address"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Custom Footer"
-    }
-  ]
-}
+  {
+    "name": "Custom Footer",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout & Spacing"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding Top",
+        "default": 80
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding Bottom",
+        "default": 80
+      },
+      {
+        "type": "header",
+        "content": "Colors"
+      }, {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#f6f5f2"
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Main Color",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "border_color",
+        "label": "Border/Line Color",
+        "default": "#e5e5e5"
+      }, {
+        "type": "color",
+        "id": "brand_color",
+        "label": "Brand Heading Color",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "link_color",
+        "label": "Link Color",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "link_hover_color",
+        "label": "Link Hover Color",
+        "default": "#555555"
+      }, {
+        "type": "header",
+        "content": "Brand Identity"
+      }, {
+        "type": "text",
+        "id": "brand_name",
+        "label": "Brand Headline",
+        "default": "MAGDA BUTRYM"
+      }, {
+        "type": "range",
+        "id": "brand_size_desktop",
+        "min": 40,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Headline Size (Desktop)",
+        "default": 120
+      }, {
+        "type": "range",
+        "id": "brand_size_mobile",
+        "min": 20,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Headline Size (Mobile)",
+        "default": 40
+      }, {
+        "type": "image_picker",
+        "id": "brand_icon",
+        "label": "Brand Icon (Bottom Right)"
+      }, {
+        "type": "header",
+        "content": "Navigation Menus"
+      }, {
+        "type": "link_list",
+        "id": "menu_1",
+        "label": "Menu 1 (Top Left)"
+      }, {
+        "type": "link_list",
+        "id": "menu_2",
+        "label": "Menu 2 (Bottom Left)"
+      }, {
+        "type": "link_list",
+        "id": "menu_legal",
+        "label": "Legal Menu (Top Middle)"
+      }, {
+        "type": "range",
+        "id": "link_size",
+        "min": 10,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Link Font Size",
+        "default": 12
+      }, {
+        "type": "select",
+        "id": "link_transform",
+        "label": "Link Text Style",
+        "options": [
+          {
+            "value": "uppercase",
+            "label": "Uppercase"
+          }, {
+            "value": "capitalize",
+            "label": "Capitalize"
+          }, {
+            "value": "none",
+            "label": "Normal"
+          }
+        ],
+        "default": "uppercase"
+      }, {
+        "type": "header",
+        "content": "Social Links"
+      }, {
+        "type": "url",
+        "id": "instagram_url",
+        "label": "Instagram URL"
+      }, {
+        "type": "url",
+        "id": "facebook_url",
+        "label": "Facebook URL"
+      }, {
+        "type": "url",
+        "id": "linkedin_url",
+        "label": "LinkedIn URL"
+      }, {
+        "type": "url",
+        "id": "twitter_url",
+        "label": "Twitter URL"
+      }, {
+        "type": "header",
+        "content": "Newsletter"
+      }, {
+        "type": "text",
+        "id": "newsletter_title",
+        "label": "Newsletter Label",
+        "default": "Newsletter"
+      }, {
+        "type": "text",
+        "id": "newsletter_placeholder",
+        "label": "Placeholder Text",
+        "default": "Email Address"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Footer"
+      }
+    ]
+  }
 {% endschema %}
