@@ -18,6 +18,11 @@
   overflow: hidden;
   background-color: #222A37;
   will-change: transform; /* Optimize for GSAP animations */
+  /* Anti-flicker fixes */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 .middle-centered-image {
@@ -25,6 +30,9 @@
   height: 70%;
   object-fit: cover;
   display: block;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
 }
 
 @media (max-width: 768px) {

@@ -99,20 +99,81 @@
 }
 
 /* Responsive: Stack images on mobile */
+/* Responsive: Horizontal on mobile with 30% gap */
 @media (max-width: 768px) {
+  .horizontal-scroller {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+  }
+
+  .horizontal-scroller .scroller-wrapper {
+    flex-wrap: nowrap;
+    gap: 0; /* Gap is now handled by internal centering */
+    padding: 0;
+    height: 100vh;
+    align-items: center;
+  }
+  
+  /* Each logical step is 100vw wide */
+  .horizontal-scroller .content {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    height: 100vh !important;
+    flex-shrink: 0;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+
+  /* Panel 2 is special - holds two 100vw logical steps */
+  .horizontal-scroller .content:nth-child(2) {
+    width: 200vw !important;
+    min-width: 200vw !important;
+  }
+
+  /* Split layout inside the 200vw panel */
   .horizontal-scroller .content-split {
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row; 
+    width: 100%;
+    height: 100%;
+    padding: 0 !important;
+    justify-content: flex-start;
   }
   
   .horizontal-scroller .split-left,
   .horizontal-scroller .split-right {
-    flex: 1;
+    flex: 0 0 100vw; 
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
+  /* Shared image sizing for all panels */
   .horizontal-scroller .split-left .split-image,
-  .horizontal-scroller .split-right .split-image {
-    max-height: 45vh;
+  .horizontal-scroller .split-right .split-image,
+  .horizontal-scroller .content .panel-image,
+  .horizontal-scroller .content .panel-image-full {
+    width: 70vw !important; /* Fixed width */
+    max-width: 70vw !important;
+    height: 45vh !important; /* Fixed height */
+    max-height: 45vh !important;
+    object-fit: cover !important;
+    border-radius: 4px; /* Optional: Slight rounding for premium feel */
+  }
+
+  /* Special case for panel 3 - Same as others */
+  .horizontal-scroller .content:nth-child(3) {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    justify-content: center !important;
+    padding: 0 !important;
   }
 }
 

@@ -151,122 +151,81 @@
         return;
       }
   
-      // Get actual width of wrapper
-      const scrollWidth = wrapper.scrollWidth;
-      const viewportWidth = window.innerWidth;
-  
-      console.log('Horizontal Scroller Init:', {
-        scrollWidth,
-        viewportWidth,
-        scrollDistance: scrollWidth - viewportWidth
-      });
-  
-      // Create horizontal scroll animation with optimized settings
-      gsap.to(wrapper, {
-        x: -(scrollWidth - viewportWidth),
-        ease: 'none',
-        force3D: true, // GPU acceleration
-        scrollTrigger: {
-          trigger: sectionId,
-          pin: true,
-          pinSpacing: true,
-          scrub: 1.5, // Increased scrub for better smooth-scroll integration
-          end: () => '+=' + (scrollWidth - viewportWidth),
-          invalidateOnRefresh: true,
-          anticipatePin: 1, // Smooth pin transition
-          fastScrollEnd: true, // Better fast scroll performance
-          // markers: true, // Uncomment for debugging
-        },
-      });
-  
-      // Wait for DOM to be fully ready before setting up middle section animation
+      // Force a reflow and wait for CSS to be fully applied
+      wrapper.offsetHeight; 
+      
       setTimeout(() => {
+        const scrollWidth = wrapper.scrollWidth;
+        const viewportWidth = window.innerWidth;
+  
+        // 1. Horizontal Scroll Animation
+        gsap.to(wrapper, {
+          x: -(scrollWidth - viewportWidth),
+          ease: 'none',
+          force3D: true,
+          scrollTrigger: {
+            trigger: sectionId,
+            pin: true,
+            pinSpacing: true,
+            scrub: 1.5,
+            end: () => '+=' + (scrollWidth - viewportWidth),
+            invalidateOnRefresh: true,
+            anticipatePin: 1.5,
+          },
+        });
+  
+        // 2. Middle Section Stacking (Improved to prevent flicker)
         const middleSection = document.querySelector('.middle-image-section');
-  
         if (middleSection) {
-          console.log('Middle section found, setting up stacking animation');
-  
-          // Set initial state with GPU acceleration
-          gsap.set(middleSection, {
-            y: 100,
-            force3D: true,
-          });
-  
-          // Create the stacking scroll animation
-          const stackTimeline = gsap.timeline({
+          gsap.timeline({
             scrollTrigger: {
               trigger: middleSection,
               pin: true,
               pinSpacing: true,
-              scrub: 1.5, // Match horizontal scroll smoothness
-              start: 'top top',
+              scrub: 1.5,
+              start: 'top top', 
               end: '+=100%',
               invalidateOnRefresh: true,
-              anticipatePin: 1, // Smooth pin transition
-              fastScrollEnd: true, // Better fast scroll performance
-              // markers: true, // Uncomment for debugging
-              onEnter: () => console.log('Middle section stacking animation started'),
-              onLeave: () => console.log('Middle section stacking animation completed'),
+              anticipatePin: 1.5,
             },
-          });
-  
-          // Animate section with linear easing
-          stackTimeline.to(middleSection, {
-            y: 0,
-            ease: 'none', // Linear for smooth scroll-linked animation
-            force3D: true, // GPU acceleration
-          });
-        } else {
-          console.warn('Middle image section not found. Make sure it exists on the page.');
+          }).fromTo(middleSection, 
+            { y: 150, force3D: true }, 
+            { y: 0, ease: 'none', immediateRender: true }
+          );
         }
   
-        // Add stacking animation for large image section if it exists
+        // 3. Large Section Stacking (Improved to prevent flicker)
         const largeSection = document.querySelector('.large-image-section');
-  
         if (largeSection) {
-          console.log('Large section found, setting up stacking animation');
-  
-          // Set initial state (only y position, no scale)
-          gsap.set(largeSection, {
-            y: 100,
-            force3D: true, // Force GPU acceleration
-          });
-  
-          // Create the stacking scroll animation for large section
-          const largeStackTimeline = gsap.timeline({
+          gsap.timeline({
             scrollTrigger: {
               trigger: largeSection,
               pin: true,
               pinSpacing: true,
-              scrub: 1.5, // Sync with global smoothness
+              scrub: 1.5,
               start: 'top top',
               end: '+=100%',
               invalidateOnRefresh: true,
-              anticipatePin: 1, // Smooth pin transition
-              fastScrollEnd: true, // Better performance on fast scroll
-              // markers: true, // Uncomment for debugging
-              onEnter: () => console.log('Large section stacking animation started'),
-              onLeave: () => console.log('Large section stacking animation completed'),
+              anticipatePin: 1.5,
             },
-          });
-  
-          // Animate section (only y position, no scale)
-          largeStackTimeline.to(largeSection, {
-            y: 0,
-            ease: 'none', // Linear for smooth scroll-linked animation
-            force3D: true, // Force GPU acceleration
-          });
-        } else {
-          console.warn('Large image section not found. Make sure it exists on the page.');
+          }).fromTo(largeSection, 
+            { y: 150, force3D: true }, 
+            { y: 0, ease: 'none', immediateRender: true }
+          );
         }
-      }, 500); // Wait 500ms for all sections to render
+        
+        // Final refresh to lock in everything
+        ScrollTrigger.refresh();
+      }, 400);
   
   
-      // Refresh on resize
-      let resizeTimer;
+      // Refresh on significant width changes only (prevents mobile URL bar flicker)
+      let lastWidth = window.innerWidth;
       window.addEventListener('resize', function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 250);
+        if (window.innerWidth !== lastWidth) {
+          lastWidth = window.innerWidth;
+          ScrollTrigger.refresh();
+        }
       });
     }
   

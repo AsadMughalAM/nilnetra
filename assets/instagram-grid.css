@@ -109,34 +109,30 @@
 }
 
 /* ================================
-   Mobile Layout
+   Mobile Layout (Redefined for Editorial Consistency)
    ================================ */
 
 @media (max-width: 768px) {
   .instagram-grid-container {
-    min-height: auto;
-    padding: 4rem 1.5rem;
+    min-height: 120vh; /* Increased to allow vertical room for editorial content */
+    padding: 2rem 1rem;
   }
-
-
 
   .instagram-images-wrapper {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    position: absolute; /* Revert to absolute to match desktop */
+    display: block; /* Remove grid */
   }
 
-  .instagram-item {
-    position: relative;
-    inset: auto !important;
-    width: 100% !important;
-    max-width: none !important;
-    transform: none !important;
-  }
+  /* Scale widths up for mobile but keep the layout logic */
+  .instagram-item.item-1 { width: 40vw; max-width: 180px; top: 5%; left: 5%; }
+  .instagram-item.item-2 { width: 50vw; max-width: 220px; top: 25%; right: 5%; left: auto; }
+  .instagram-item.item-3 { width: 60vw; max-width: 280px; top: 45%; left: 50%; transform: translateX(-50%); }
+  .instagram-item.item-4 { width: 45vw; max-width: 200px; top: 70%; left: 10%; }
+  .instagram-item.item-5 { width: 35vw; max-width: 160px; top: 75%; right: 10%; left: auto; }
+}
 
-  /* Visual variation */
-  .instagram-item.item-3,
-  .instagram-item.item-5 {
-    grid-column: span 2;
+@media (max-width: 480px) {
+  .instagram-grid-container {
+    min-height: 140vh; /* Even more room for small phones */
   }
 }

@@ -91,48 +91,33 @@
     const section = document.querySelector('#InstagramGrid-{{ section.id }}');
     const items = section.querySelectorAll('.parallax-item');
   
-    let mm = gsap.matchMedia();
+    if (!section || items.length === 0) return;
   
-    // Desktop Parallax + Stack
-    mm.add('(min-width: 769px)', () => {
-      items.forEach((item, i) => {
-        const speed = Number(item.dataset.speed) || 6;
+    // Unified Parallax + Stack for ALL devices (Mirroring Desktop to Mobile)
+    items.forEach((item, i) => {
+      const speed = Number(item.dataset.speed) || 6;
   
-        gsap.fromTo(
-          item,
-          {
-            yPercent: speed * 1.5,
-            scale: 0.95,
-            zIndex: i,
-          },
-          {
-            yPercent: -speed * 1.5,
-            scale: 1.05,
-            zIndex: 10 + i,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 1.5, // Added numeric scrub for extra smoothness
-            },
-          }
-        );
-      });
-    });
-  
-    // Mobile Fade
-    mm.add('(max-width: 768px)', () => {
-      gsap.from(items, {
-        opacity: 0,
-        y: 40,
-        stagger: 0.12,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 80%',
+      gsap.fromTo(
+        item,
+        {
+          yPercent: speed * 1.5,
+          scale: 0.95,
+          zIndex: i,
         },
-      });
+        {
+          yPercent: -speed * 1.5,
+          scale: 1.05,
+          zIndex: 10 + i,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1.5, // Matches the global smoothness sweet spot
+            invalidateOnRefresh: true
+          },
+        }
+      );
     });
   });
 </script>
