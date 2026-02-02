@@ -1,53 +1,154 @@
-/* Edge-to-Edge Grid Layout */
+/* Edge-to-Edge Grid Layout - Dynamic Admin Control */
 
-/* Remove max-width and internal padding from the collection container to make it full width */
+/* ---------------------------------------------------------
+   Container & General
+--------------------------------------------------------- */
+/* Ensure the container is full width but has balanced padding matching the gaps */
 .product-grid-container .collection.page-width,
 .template-search__results.collection.page-width {
   max-width: 100% !important;
-  padding-left: 0 !important; /* Revert to 0 for edge-to-edge images */
-  padding-right: 0 !important;
+  /* Default desktop padding matches the desktop gap */
+  padding-left: 40px !important; 
+  padding-right: 40px !important;
 }
 
-/* Update Grid Gap and reduce Card Size */
+/* Base Grid Settings */
 .product-grid-container .grid,
 .template-search__results .grid {
   width: 100%;
-  column-gap: 40px !important; /* Increase horizontal gap */
-  row-gap: 50px !important;    /* Increase vertical gap */
+  margin-left: 0; 
+  display: flex;
+  flex-wrap: wrap;
 }
 
-/* Add padding to content of the LEFT-MOST cards only, so text doesn't touch screen edge */
+/* ---------------------------------------------------------
+   Desktop Layout (>= 990px)
+   Respects 'columns_desktop' setting
+   Gap: 40px
+--------------------------------------------------------- */
 @media screen and (min-width: 990px) {
-  /* Targeted for 4-column layout: 1st, 5th, 9th... items */
-  .grid--4-col-desktop .grid__item:nth-child(4n+1) .card__information {
-    padding-left: 20px;
+  .product-grid-container .grid,
+  .template-search__results .grid {
+    column-gap: 40px !important;
+    row-gap: 50px !important;
+  }
+
+  /* 1 Column */
+  .grid--1-col-desktop .grid__item {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* 2 Columns */
+  .grid--2-col-desktop .grid__item {
+    width: calc(50% - 20px) !important; /* 40px * 1 / 2 */
+    max-width: calc(50% - 20px) !important;
+  }
+
+  /* 3 Columns */
+  .grid--3-col-desktop .grid__item {
+    width: calc(33.33% - 26.67px) !important; /* 40px * 2 / 3 */
+    max-width: calc(33.33% - 26.67px) !important;
+  }
+
+  /* 4 Columns */
+  .grid--4-col-desktop .grid__item {
+    width: calc(25% - 30px) !important; /* 40px * 3 / 4 */
+    max-width: calc(25% - 30px) !important;
+  }
+
+  /* 5 Columns */
+  .grid--5-col-desktop .grid__item {
+    width: calc(20% - 32px) !important; /* 40px * 4 / 5 */
+    max-width: calc(20% - 32px) !important;
+  }
+
+  /* 6 Columns */
+  .grid--6-col-desktop .grid__item {
+    width: calc(16.66% - 33.33px) !important; /* 40px * 5 / 6 */
+    max-width: calc(16.66% - 33.33px) !important;
   }
 }
 
-/* Mobile: Left-most cards (odd numbers for 2-col) or all for 1-col */
+/* ---------------------------------------------------------
+   Mobile / Tablet Layout (< 990px)
+   Respects 'columns_mobile' setting (applied via grid--X-col-tablet-down)
+   Gap: 10px
+--------------------------------------------------------- */
 @media screen and (max-width: 989px) {
-  .grid--2-col-tablet-down .grid__item:nth-child(2n+1) .card__information {
-    padding-left: 15px;
+  /* Reduce container padding on mobile for "equal spacing" look */
+  .product-grid-container .collection.page-width,
+  .template-search__results.collection.page-width {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
-}
 
-/* Adjust grid item width to account for wider gaps */
-/* We need to override the calculated width from base.css */
-@media screen and (min-width: 990px) {
-  .product-grid-container .grid--4-col-desktop .grid__item,
-  .template-search__results .grid--4-col-desktop .grid__item {
-    width: calc(25% - 40px * 3 / 4) !important;
-    max-width: calc(25% - 40px * 3 / 4) !important;
+  /* Reduce grid gaps */
+  .product-grid-container .grid,
+  .template-search__results .grid {
+    column-gap: 10px !important;
+    row-gap: 20px !important;
   }
   
-  /* Fallback for other column counts if needed, but primary focus is 4-col */
-  .product-grid-container .grid--3-col-desktop .grid__item {
-     width: calc(33.33% - 40px * 2 / 3) !important;
-     max-width: calc(33.33% - 40px * 2 / 3) !important;
+  /* 1 Column Mobile */
+  .grid--1-col-tablet-down .grid__item {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* 2 Column Mobile */
+  .grid--2-col-tablet-down .grid__item {
+    width: calc(50% - 5px) !important; /* 10px gap / 2 */
+    max-width: calc(50% - 5px) !important;
+  }
+  
+  /* Note: If the user explicitly wants 3 columns on tablet, they would need a custom setting. 
+     Currently, this strictly follows the 'columns_mobile' setting which supports 1 or 2. */
+  
+  /* Clean Card Content for Mobile and Tablet */
+  .card__information {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Stack Title and Price for better readability on small screens */
+  .product-card-title-price-row {
+     flex-direction: column !important;
+     gap: 4px !important;
+     align-items: flex-start !important;
+  }
+
+  .product-card-price-wrapper {
+    text-align: left !important;
+    padding-top: 0 !important;
+  }
+  
+  .card__heading {
+    font-size: 1.3rem !important; /* Slightly smaller font for mobile */
   }
 }
 
-/* Optional: Ensure the outer section padding doesn't interfere if it's set */
-/* The section-padding class adds padding-top/bottom, but normally not left/right unless specialized */
-/* But if section-padding adds internal padding, we might need to check. 
-   Usually usually .gradient or .color-scheme classes don't add padding. */
+/* ---------------------------------------------------------
+   Tablet Specific Tweaks (Optional Polishing)
+   (750px to 989px)
+   If we want to slightly increase gap on larger tablets but keep column count from setting
+--------------------------------------------------------- */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+   .product-grid-container .collection.page-width,
+   .template-search__results.collection.page-width {
+     padding-left: 20px !important;
+     padding-right: 20px !important;
+   }
+   
+   .product-grid-container .grid,
+   .template-search__results .grid {
+     column-gap: 20px !important;
+     row-gap: 30px !important;
+   }
+   
+   /* Recalculate 2-col width for the larger 20px gap */
+   .grid--2-col-tablet-down .grid__item {
+     width: calc(50% - 10px) !important; 
+     max-width: calc(50% - 10px) !important;
+   }
+}
