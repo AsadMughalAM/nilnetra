@@ -1,0 +1,53 @@
+/* Edge-to-Edge Grid Layout */
+
+/* Remove max-width and internal padding from the collection container to make it full width */
+.product-grid-container .collection.page-width,
+.template-search__results.collection.page-width {
+  max-width: 100% !important;
+  padding-left: 0 !important; /* Revert to 0 for edge-to-edge images */
+  padding-right: 0 !important;
+}
+
+/* Update Grid Gap and reduce Card Size */
+.product-grid-container .grid,
+.template-search__results .grid {
+  width: 100%;
+  column-gap: 40px !important; /* Increase horizontal gap */
+  row-gap: 50px !important;    /* Increase vertical gap */
+}
+
+/* Add padding to content of the LEFT-MOST cards only, so text doesn't touch screen edge */
+@media screen and (min-width: 990px) {
+  /* Targeted for 4-column layout: 1st, 5th, 9th... items */
+  .grid--4-col-desktop .grid__item:nth-child(4n+1) .card__information {
+    padding-left: 20px;
+  }
+}
+
+/* Mobile: Left-most cards (odd numbers for 2-col) or all for 1-col */
+@media screen and (max-width: 989px) {
+  .grid--2-col-tablet-down .grid__item:nth-child(2n+1) .card__information {
+    padding-left: 15px;
+  }
+}
+
+/* Adjust grid item width to account for wider gaps */
+/* We need to override the calculated width from base.css */
+@media screen and (min-width: 990px) {
+  .product-grid-container .grid--4-col-desktop .grid__item,
+  .template-search__results .grid--4-col-desktop .grid__item {
+    width: calc(25% - 40px * 3 / 4) !important;
+    max-width: calc(25% - 40px * 3 / 4) !important;
+  }
+  
+  /* Fallback for other column counts if needed, but primary focus is 4-col */
+  .product-grid-container .grid--3-col-desktop .grid__item {
+     width: calc(33.33% - 40px * 2 / 3) !important;
+     max-width: calc(33.33% - 40px * 2 / 3) !important;
+  }
+}
+
+/* Optional: Ensure the outer section padding doesn't interfere if it's set */
+/* The section-padding class adds padding-top/bottom, but normally not left/right unless specialized */
+/* But if section-padding adds internal padding, we might need to check. 
+   Usually usually .gradient or .color-scheme classes don't add padding. */
