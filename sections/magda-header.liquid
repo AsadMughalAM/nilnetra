@@ -145,13 +145,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
 
 
   /*
+
    --------------------------------------------------------- 
    MOBILE RESPONSIVENESS (Max-Width 990px) 
-   ---------------------------------------------------------
+   --------------------------------------------------------- 
 */
   @media screen and (max-width: 990px) {
     .magda-header {
@@ -229,7 +231,7 @@
   onload="this.media='all'">
 <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
 
-<header class="magda-header">
+<header class="magda-header header-wrapper">
   <div class="magda-header__left">
     {% render 'header-drawer' %}
 
@@ -312,7 +314,7 @@
 {% schema %}
   {
     "name": "Magda Header",
-    "class": "magda-header-sticky-host",
+    "class": "magda-header-sticky-host section-header",
     "settings": [
       {
         "type": "image_picker",
