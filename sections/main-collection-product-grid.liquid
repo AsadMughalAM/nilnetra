@@ -40,86 +40,91 @@
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
   {%- paginate collection.products by section.settings.products_per_page -%}
     {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
-    {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
+    {% comment %} 
+      {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%} 
       <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
-        <form class="facets-vertical-form" id="FacetSortForm">
-          <div class="facet-filters sorting caption">
-            <div class="facet-filters__field">
-              <h2 class="facet-filters__label caption-large text-body">
-                <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
-              </h2>
-              <div class="select">
-                {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
-                <select
-                  name="sort_by"
-                  class="facet-filters__sort select__select caption-large"
-                  id="SortBy"
-                  aria-describedby="a11y-refresh-page-message">
-                  {%- for option in collection.sort_options -%}
-                    <option
-                      value="{{ option.value | escape }}"
-                      {% if option.value == sort_by %}
-                      selected="selected"
-                      {% endif %}>
-                      {{ option.name | escape }}
-                    </option>
-                  {%- endfor -%}
-                </select>
-                <span class="svg-wrapper">
-                  {{- 'icon-caret.svg' | inline_asset_content -}}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="product-count-vertical light" role="status">
-            <h2 class="product-count__text text-body">
-              <span id="ProductCountDesktop">
-                {%- if collection.results_count -%}
-                  {{ 'templates.search.results_with_count'
- | t: terms: collection.terms, count: collection.results_count
-                  }}
-                {%- elsif collection.products_count == collection.all_products_count -%}
-                  {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
-                {%- else -%}
-                  {{ 'products.facets.product_count'
- | t: product_count: collection.products_count, count: collection.all_products_count
-                  }}
-                {%- endif -%}
-              </span>
-            </h2>
-            {%- render 'loading-spinner' -%}
-          </div>
-        </form>
-      </facet-filters-form>
-    {%- endif -%}
+      <form class="facets-vertical-form" id="FacetSortForm">
+      <div class="facet-filters sorting caption">
+      <div class="facet-filters__field">
+      <h2 class="facet-filters__label caption-large text-body">
+      <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
+      </h2>
+      <div class="select">
+      {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+      <select
+      name="sort_by"
+      class="facet-filters__sort select__select caption-large"
+      id="SortBy"
+      aria-describedby="a11y-refresh-page-message">
+      {%- for option in collection.sort_options -%}
+      <option
+      value="{{ option.value | escape }}"
+      {% if option.value == sort_by %}
+      selected="selected"
+      {% endif %}>
+      {{ option.name | escape }}
+      </option>
+      {%- endfor -%}
+      </select>
+      <span class="svg-wrapper">
+      {{- 'icon-caret.svg' | inline_asset_content -}}
+      </span>
+      </div>
+      </div>
+      </div>
+      <div class="product-count-vertical light" role="status">
+      <h2 class="product-count__text text-body">
+      <span id="ProductCountDesktop">
+      {%- if collection.results_count -%}
+      {{ 'templates.search.results_with_count' 
+      | t: terms: collection.terms, count: collection.results_count
+      }}
+      {%- elsif collection.products_count == collection.all_products_count -%}
+      {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
+      {%- else -%}
+      {{ 'products.facets.product_count' 
+      | t: product_count: collection.products_count, count: collection.all_products_count
+      }}
+      {%- endif -%}
+      </span>
+      </h2>
+      {%- render 'loading-spinner' -%}
+      </div>
+      </form> 
+      </facet-filters-form> 
+      {%- endif -%}
+    {% endcomment %}
 
     <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
       {{ 'component-facets.css' | asset_url | stylesheet_tag }}
       <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
-      {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-        <aside style="padding: 10rem 0rem 0rem 0rem;"
-          aria-labelledby="verticalTitle"
-          class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
-          id="main-collection-filters"
-          data-id="{{ section.id }}">
-          {% render 'facets'
-            ,
- results: collection
-            ,
- enable_filtering: section.settings.enable_filtering
-            ,
- enable_sorting: section.settings.enable_sorting
-            ,
- filter_type: section.settings.filter_type
-            ,
- paginate: paginate
-          %}
-        </aside>
-      {%- endif -%}
+      {% comment %} 
+        {%- if section.settings.enable_filtering or section.settings.enable_sorting -%} 
+        <aside
+        style="padding: 0rem 0rem 0rem 0rem;"
+        aria-labelledby="verticalTitle"
+        class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+        id="main-collection-filters"
+        data-id="{{ section.id }}">
+        {% render 'facets'
+        , 
+        results: collection
+        , 
+        enable_filtering: section.settings.enable_filtering
+        , 
+        enable_sorting: section.settings.enable_sorting
+        , 
+        filter_type: section.settings.filter_type
+        , 
+        paginate: paginate
+        %} 
+        </aside> 
+        {%- endif -%}
+      {% endcomment %}
 
       <div
-        class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+
+        class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %} "
         id="ProductGridContainer"
         {% if settings.animations_reveal_on_scroll %}
         data-cascade
@@ -164,26 +169,22 @@
                   style="--animation-order: {{ forloop.index }};"
                   {% endif %}>
                   {% render 'card-product'
-                    ,
- card_product: product
-                    ,
- media_aspect_ratio: section.settings.image_ratio
-                    ,
- image_shape: section.settings.image_shape
-                    ,
- show_secondary_image: section.settings.show_secondary_image
-                    ,
- show_vendor: section.settings.show_vendor
-                    ,
- show_rating: section.settings.show_rating
-                    ,
- lazy_load: lazy_load
-                    ,
- skip_styles: skip_card_product_styles
-                    ,
- quick_add: section.settings.quick_add
-                    ,
- section_id: section.id
+                    , card_product: product
+                    , media_aspect_ratio: section.settings.image_ratio
+                    , image_shape: section.settings.image_shape
+                    , show_secondary_image: section.settings.show_secondary_image
+                    , show_vendor: section.settings.show_vendor
+                    , show_rating: section.settings.show_rating
+                    , lazy_load: lazy_load
+                    , skip_styles: skip_card_product_styles
+                    , quick_add: section.settings.quick_add
+                    , section_id: section.id
+                    , custom_ratio: section.settings.image_custom_ratio
+                    , image_scale: section.settings.image_scale
+                    , image_padding: section.settings.image_padding
+                    , image_max_height: section.settings.image_max_height
+                    , columns_desktop: section.settings.columns_desktop
+                    , columns_mobile: section.settings.columns_mobile
                   %}
                 </li>
                 {%- assign skip_card_product_styles = true -%}
@@ -225,7 +226,7 @@
         "min": 1,
         "max": 6,
         "step": 1,
-        "default": 4,
+        "default": 3,
         "label": "t:sections.main-collection-product-grid.settings.columns_desktop.label"
       },
       {
@@ -263,12 +264,52 @@
             "value": "portrait",
             "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__2.label"
           }, {
-            "value": "square",
-            "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__3.label"
+            "value": "custom",
+            "label": "Custom"
           }
         ],
-        "default": "adapt",
+        "default": "portrait",
         "label": "t:sections.main-collection-product-grid.settings.image_ratio.label"
+      }, {
+        "type": "header",
+        "content": "Image Size & Style Control"
+      }, {
+        "type": "range",
+        "id": "image_custom_ratio",
+        "min": 0.3,
+        "max": 3.0,
+        "step": 0.1,
+        "unit": "rat",
+        "label": "Custom Aspect Ratio",
+        "default": 0.7,
+        "info": "Set Image Ratio to 'Custom' to use this."
+      }, {
+        "type": "range",
+        "id": "image_max_height",
+        "min": 200,
+        "max": 1200,
+        "step": 50,
+        "unit": "px",
+        "label": "Max Image Height",
+        "default": 700
+      }, {
+        "type": "range",
+        "id": "image_scale",
+        "min": 50,
+        "max": 150,
+        "step": 5,
+        "unit": "%",
+        "label": "Image Scale (Zoom)",
+        "default": 100
+      }, {
+        "type": "range",
+        "id": "image_padding",
+        "min": 0,
+        "max": 60,
+        "step": 2,
+        "unit": "px",
+        "label": "Image Padding (Shrink)",
+        "default": 0
       }, {
         "type": "select",
         "id": "image_shape",

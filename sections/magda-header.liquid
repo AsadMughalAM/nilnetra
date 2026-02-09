@@ -18,14 +18,17 @@
     color: #000000;
     width: 100%;
     box-sizing: border-box;
-    margin-bottom: 2rem;
+    /* Removed margin-bottom to handle spacing via dynamic host calculation */
     transition: transform 0.3s ease;
+    position: relative;
+    /* Context for mega menu */
   }
 
   /* Left Section */
   .magda-header__left {
     display: flex;
-    align-items: center;
+    align-items: stretch;
+    /* Stretch to avoid hover gaps */
     gap: 3rem;
   }
 
@@ -148,6 +151,54 @@
     position: relative;
   }
 
+  /* Mega Menu Styles */
+  .magda-nav-item {
+    display: flex;
+    align-items: center;
+    position: static;
+    /* Full width */
+    height: 100%;
+  }
+
+  .magda-mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 999;
+    padding: 2.5rem 4rem 4rem;
+    box-sizing: border-box;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.04);
+    border-top: 1px solid #f9f9f9;
+  }
+
+  /* Hover Bridge */
+  .magda-mega-menu::before {
+    content: '';
+    position: absolute;
+    top: -2.5rem;
+    left: 0;
+    width: 100%;
+    height: 2.5rem;
+    background: transparent;
+  }
+
+  .magda-nav-item:hover .magda-mega-menu {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .magda-mega-menu__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+
 
   /*
 
@@ -175,7 +226,7 @@
     }
 
     /* Hide Desktop Links on Left */
-    .magda-header__left .magda-nav-link,
+    .magda-header__left .magda-nav-item,
     .magda-header__left .magda-search-icon {
       display: none;
     }
@@ -221,6 +272,21 @@
       display: none;
       /* Hide drawer on desktop */
     }
+
+    #smooth-content {
+      padding-top: var(--magda-header-height, 100px);
+    }
+  }
+
+  /* Global fix for pages without smooth-content as well */
+  #MainContent {
+    padding-top: var(--magda-header-height, 0);
+  }
+
+  /* Reset padding for homepage if header is hidden there */
+  .template-index #MainContent,
+  .template-index #smooth-content {
+    padding-top: 0 !important;
   }
 {%- endstyle -%}
 
@@ -237,13 +303,26 @@
 
     {%- if section.settings.menu_left != blank -%}
       {%- for link in section.settings.menu_left.links -%}
-        <a href="{{ link.url }}" class="magda-nav-link">{{ link.title }}</a>
+        <div class="magda-nav-item">
+          <a href="{{ link.url }}" class="magda-nav-link text-body">{{ link.title }}</a>
+          {%- assign link_handle = link.title | downcase -%}
+          {%- if link_handle == 'catalog' or link_handle == 'collections' or link_handle == 'shop' -%}
+            {% render 'magda-mega-menu' %}
+          {%- endif -%}
+        </div>
       {%- endfor -%}
     {%- else -%}
       <!-- Fallback links if no menu selected -->
-      <a href="/collections/all" class="magda-nav-link">Shop</a>
-      <a href="/pages/highlights" class="magda-nav-link">Highlights</a>
-      <a href="/features" class="magda-nav-link">Explore</a>
+      <div class="magda-nav-item">
+        <a href="/collections/all" class="magda-nav-link">Shop</a>
+        {% render 'magda-mega-menu' %}
+      </div>
+      <div class="magda-nav-item">
+        <a href="/pages/highlights" class="magda-nav-link">Highlights</a>
+      </div>
+      <div class="magda-nav-item">
+        <a href="/features" class="magda-nav-link">Explore</a>
+      </div>
     {%- endif -%}
 
     <button class="magda-search-icon" aria-label="Search">
@@ -277,21 +356,11 @@
   </div>
 
   <div class="magda-header__right">
-    <div class="magda-currency">
-      {%- if localization.available_countries.size > 1 -%}
-        {{ localization.country.iso_code }} / {{ localization.country.currency.iso_code }}
-      {%- else -%}
-        PK / PKR
-      {%- endif -%}
-    </div>
 
     {%- if section.settings.menu_right != blank -%}
       {%- for link in section.settings.menu_right.links -%}
         <a href="{{ link.url }}" class="magda-nav-link">{{ link.title }}</a>
       {%- endfor -%}
-    {%- else -%}
-      <a href="/pages/boutique" class="magda-nav-link">Boutique</a>
-      <a href="/pages/contact" class="magda-nav-link">Assistance</a>
     {%- endif -%}
 
     <a
@@ -309,6 +378,35 @@
      e.preventDefault();
      window.location.href = "{{ routes.search_url }}";
   });
+  
+  // CRITICAL: Dynamic Header Height Calculation
+  // This ensures that content is never hidden behind the sticky header
+  const updateMagdaHeaderHeight = () => {
+    // Find the sticky host (which may include announcement bar if they share the sticky context)
+    const headerHost = document.querySelector('.magda-header-sticky-host');
+    const utilityBar = document.querySelector('.utility-bar'); // Dawn's announcement bar class
+    
+    let totalHeight = 0;
+    if (headerHost) totalHeight += headerHost.offsetHeight;
+    if (utilityBar && !headerHost.contains(utilityBar)) {
+       // If utility bar is separate and fixed/sticky
+       const style = window.getComputedStyle(utilityBar);
+       if (style.position === 'fixed' || style.position === 'sticky') {
+         // totalHeight += utilityBar.offsetHeight;
+       }
+    }
+  
+    if (totalHeight > 0) {
+      document.documentElement.style.setProperty('--magda-header-height', totalHeight + 'px');
+    }
+  };
+  
+  window.addEventListener('resize', updateMagdaHeaderHeight);
+  window.addEventListener('load', updateMagdaHeaderHeight);
+  // Initial run
+  setTimeout(updateMagdaHeaderHeight, 100); 
+  // Delayed run to catch late-loading images/fonts
+  setTimeout(updateMagdaHeaderHeight, 1000);
 </script>
 
 {% schema %}

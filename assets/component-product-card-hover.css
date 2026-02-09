@@ -202,3 +202,45 @@
 .card-information > .price {
   display: none;
 }
+/* Maximize image size and grid prominence */
+.product-grid-container {
+  padding: 0 10px;
+}
+
+.product-grid {
+  column-gap: 2px !important; /* Minimal gap for more width */
+  row-gap: 40px !important;
+}
+
+@media screen and (min-width: 750px) {
+  .product-grid {
+    column-gap: 5px !important;
+  }
+}
+
+.product-card-wrapper .card {
+  background: transparent !important;
+  border: none !important;
+  --image-padding: 0rem !important;
+}
+
+.product-card-wrapper .card__inner {
+  border-radius: 0 !important;
+}
+
+.product-card-wrapper .card__media {
+  border-radius: 0 !important;
+}
+
+/* Ensure images fill the container perfectly */
+.product-card-wrapper .media img {
+  object-fit: cover !important;
+}
+
+.product-card-title-price-row {
+  padding: 10px 5px 0 5px; /* Add slight padding back for text after removing it from card */
+}
+
+.product-card-hover-info {
+  padding: 0 5px;
+}

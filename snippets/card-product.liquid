@@ -16,6 +16,10 @@
   - horizontal_class: {Boolean} Add a card--horizontal class if set to true. Default: false (optional)
   - horizontal_quick_add: {Boolean} Changes the quick add button styles when set to true. Default: false (optional)
   - placeholder_image: {String} The placeholder image to use when no product exists. Default: 'product-apparel-2' (optional)
+  - custom_ratio: {Number} Custom aspect ratio if media_aspect_ratio is 'custom'
+  - image_scale: {Number} Image zoom level in percentage
+  - image_padding: {Number} Image padding in pixels
+  - image_max_height: {Number} Maximum height for the image container in pixels
 
   Usage:
   {% render 'card-product', show_vendor: section.settings.show_vendor %}
@@ -33,13 +37,35 @@
   {%- liquid
     assign ratio = 1
     if card_product.featured_media and media_aspect_ratio == 'portrait'
-      assign ratio = 0.8
+      assign ratio = 0.66
+    elsif card_product.featured_media and media_aspect_ratio == 'square'
+      assign ratio = 1.0
+    elsif card_product.featured_media and media_aspect_ratio == 'custom' and custom_ratio != blank
+      assign ratio = custom_ratio
     elsif card_product.featured_media and media_aspect_ratio == 'adapt'
       assign ratio = card_product.featured_media.aspect_ratio
     endif
     if ratio == 0 or ratio == null
       assign ratio = 1
     endif
+
+    assign image_scale_val = image_scale | default: 100 | divided_by: 100.0
+    assign padding_val = image_padding | default: 0 | append: 'px'
+    assign max_height_val = image_max_height | default: 'none' | append: 'px'
+    if image_max_height == blank or image_max_height == 0
+       assign max_height_val = 'none'
+    endif
+
+    assign columns_desktop = columns_desktop | default: 4 | plus: 0
+    assign columns_mobile = columns_mobile | default: 2 | plus: 0
+    
+    # Calculate responsive sizes based on real columns and scale
+    capture sizes
+      echo '(min-width: ' | append: settings.page_width | append: 'px) calc((' | append: settings.page_width | append: 'px - 100px) / ' | append: columns_desktop | append: ' * ' | append: image_scale_val | append: '), '
+      echo '(min-width: 990px) calc((100vw - 100px) / ' | append: columns_desktop | append: ' * ' | append: image_scale_val | append: '), '
+      echo '(min-width: 750px) calc((100vw - 80px) / 2 * ' | append: image_scale_val | append: '), '
+      echo 'calc((100vw - 30px) / ' | append: columns_mobile | append: ' * ' | append: image_scale_val | append: ')'
+    endcapture
   -%}
   <div class="card-wrapper product-card-wrapper">
     <div
@@ -52,15 +78,15 @@
         {% if card_product.featured_media == nil and settings.card_style == 'card' %} ratio{% endif %}
         {% if horizontal_class %} card--horizontal{% endif %}
       "
-      style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
+      style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%; --image-scale: {{ image_scale_val }}; --image-padding: {{ padding_val }}; --image-max-height: {{ max_height_val }};"
     >
       <div
         class="card__inner {% if settings.card_style == 'standard' %}color-{{ settings.card_color_scheme }} gradient{% endif %}{% if card_product.featured_media or settings.card_style == 'standard' %} ratio{% endif %}"
-        style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
+        style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%; --image-scale: {{ image_scale_val }}; --image-padding: {{ padding_val }}; --image-max-height: {{ max_height_val }};"
       >
         {%- if card_product.featured_media -%}
-          <div class="card__media{% if image_shape and image_shape != 'default' %} shape--{{ image_shape }} color-{{ settings.card_color_scheme }} gradient{% endif %}">
-            <div class="media media--transparent media--hover-effect">
+          <div class="card__media{% if image_shape and image_shape != 'default' %} shape--{{ image_shape }} color-{{ settings.card_color_scheme }} gradient{% endif %}" style="max-height: var(--image-max-height); padding: var(--image-padding);">
+            <div class="media media--transparent media--hover-effect" style="height: 100%;">
               {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
               <img
                 srcset="
@@ -70,10 +96,13 @@
                   {%- if card_product.featured_media.width >= 720 -%}{{ card_product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
                   {%- if card_product.featured_media.width >= 940 -%}{{ card_product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
                   {%- if card_product.featured_media.width >= 1066 -%}{{ card_product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
+                  {%- if card_product.featured_media.width >= 1200 -%}{{ card_product.featured_media | image_url: width: 1200 }} 1200w,{%- endif -%}
+                  {%- if card_product.featured_media.width >= 1500 -%}{{ card_product.featured_media | image_url: width: 1500 }} 1500w,{%- endif -%}
+                  {%- if card_product.featured_media.width >= 2000 -%}{{ card_product.featured_media | image_url: width: 2000 }} 2000w,{%- endif -%}
                   {{ card_product.featured_media | image_url }} {{ card_product.featured_media.width }}w
                 "
-                src="{{ card_product.featured_media | image_url: width: 533 }}"
-                sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                src="{{ card_product.featured_media | image_url: width: 1000 }}"
+                sizes="{{ sizes }}"
                 alt="{{ card_product.featured_media.alt | escape }}"
                 class="motion-reduce"
                 {% unless lazy_load == false %}
@@ -81,6 +110,7 @@
                 {% endunless %}
                 width="{{ card_product.featured_media.width }}"
                 height="{{ card_product.featured_media.height }}"
+                style="transform: scale(var(--image-scale)); object-fit: cover;"
               >
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
 
@@ -93,15 +123,19 @@
                     {%- if card_product.media[1].width >= 720 -%}{{ card_product.media[1] | image_url: width: 720 }} 720w,{%- endif -%}
                     {%- if card_product.media[1].width >= 940 -%}{{ card_product.media[1] | image_url: width: 940 }} 940w,{%- endif -%}
                     {%- if card_product.media[1].width >= 1066 -%}{{ card_product.media[1] | image_url: width: 1066 }} 1066w,{%- endif -%}
+                    {%- if card_product.media[1].width >= 1200 -%}{{ card_product.media[1] | image_url: width: 1200 }} 1200w,{%- endif -%}
+                    {%- if card_product.media[1].width >= 1500 -%}{{ card_product.media[1] | image_url: width: 1500 }} 1500w,{%- endif -%}
+                    {%- if card_product.media[1].width >= 2000 -%}{{ card_product.media[1] | image_url: width: 2000 }} 2000w,{%- endif -%}
                     {{ card_product.media[1] | image_url }} {{ card_product.media[1].width }}w
                   "
-                  src="{{ card_product.media[1] | image_url: width: 533 }}"
-                  sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                  src="{{ card_product.media[1] | image_url: width: 1000 }}"
+                  sizes="{{ sizes }}"
                   alt="{{ card_product.media[1].alt | escape }}"
                   class="motion-reduce card__media--secondary"
                   loading="lazy"
                   width="{{ card_product.media[1].width }}"
                   height="{{ card_product.media[1].height }}"
+                  style="transform: scale(var(--image-scale)); object-fit: cover;"
                 >
               {%- endif -%}
             </div>
