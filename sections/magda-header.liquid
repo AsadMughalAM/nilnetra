@@ -284,6 +284,66 @@
   }
 
   /* Reset padding for homepage if header is hidden there */
+  /* Simple Collection Dropdown Styles */.magda-nav-item.has-simple-dropdown {
+    position: relative;
+  }
+
+  .magda-nav-item.has-simple-dropdown:hover .magda-simple-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .magda-simple-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 240px;
+    background: #ffffff;
+    padding: 1.5rem 0;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f5f5f5;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1001;
+    pointer-events: none;
+    text-align: left;
+  }
+
+  .magda-simple-dropdown__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .magda-simple-dropdown__item {
+    display: block;
+    margin: 0;
+  }
+
+  .magda-simple-dropdown__link {
+    display: block;
+    padding: 0.8rem 2.5rem;
+    font-family: var(--font-body-family);
+    font-size: 0.95rem;
+    color: #555;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 400;
+  }
+
+  .magda-simple-dropdown__link:hover {
+    background: #f9f9f9;
+    color: #000;
+    padding-left: 2.8rem;
+    /* Subtle shift */
+  }
+
   .template-index #MainContent,
   .template-index #smooth-content {
     padding-top: 0 !important;
@@ -303,10 +363,12 @@
 
     {%- if section.settings.menu_left != blank -%}
       {%- for link in section.settings.menu_left.links -%}
-        <div class="magda-nav-item">
+        {%- assign link_handle = link.title | downcase -%}
+        <div class="magda-nav-item {% if link_handle == 'catalog' %}has-simple-dropdown{% endif %}">
           <a href="{{ link.url }}" class="magda-nav-link text-body">{{ link.title }}</a>
-          {%- assign link_handle = link.title | downcase -%}
-          {%- if link_handle == 'catalog' or link_handle == 'collections' or link_handle == 'shop' -%}
+          {%- if link_handle == 'catalog' -%}
+            {% render 'simple-collection-dropdown' %}
+          {%- elsif link_handle == 'collections' or link_handle == 'shop' -%}
             {% render 'magda-mega-menu' %}
           {%- endif -%}
         </div>

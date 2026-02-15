@@ -1,0 +1,11 @@
+<div class="magda-simple-dropdown">
+  <ul class="magda-simple-dropdown__list">
+    {%- for collection in collections -%}
+      <li class="magda-simple-dropdown__item">
+        <a href="{{ collection.url }}" class="magda-simple-dropdown__link">
+          {{ collection.title }}
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
