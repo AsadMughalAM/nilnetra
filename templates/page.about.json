@@ -2,7 +2,23 @@
   "sections": {
     "main": {
       "type": "about-blackcrane",
-      "settings": {}
+      "settings": {
+        "title": "ABOUT",
+        "content": "<p>CLOTHES ARE ESSENTIAL TOOLS FOR LIVING.</p><p>THEY SHOULD BE COMFORTABLE, RELAXING, AND FUNCTIONAL FOR YOUR DAILY LIFE. OUR DESIGN CONCEPT FOCUSES ON CREATING WARDROBE ESSENTIALS THAT SERVE AS AN EXTENSION OF YOUR CLOSET, REFLECTING AND ELEVATING YOUR LIFESTYLE.</p><p>FOCUSING ON AN INCLUSIVE SILHOUETTE THAT COMPLEMENTS SUPPLE LINES AND COMFORT AS A SIMPLE CLOTH FOR THE BODY, WHICH CAN BE TRANSFORMED INTO YOUR CLOTHES, YOUR PERSONALITY SUDDENLY EMERGES ONCE YOU PUT THEM ON.</p><p>WE VALUE WHERE OUR PRODUCT IS MADE, HOW IT IS MADE, AND WHO MAKES IT.</p><p>OUR DESIGNS ARE EFFORTLESS YET POLISHED, CRAFTED FROM NATURAL FIBERS THAT ARE RENEWABLE, BIODEGRADABLE, AND LONG-LASTING.</p><p>TO MINIMIZE WASTE IN PRODUCTION, WE LIMIT OURSELVES TO TWO SEASONS PER YEAR AND EMPLOY A CUT-TO-ORDER PRODUCTION SYSTEM TO AVOID OVERPRODUCTION.</p><p><strong>DIRECTOR: ALEXANDER YAMAGUCHI</strong></p><p><strong>DESIGNER: MOMO SUZUKI</strong></p>",
+        "page_width": 726,
+        "heading_size": 20,
+        "text_size": 14,
+        "text_size_mobile": 15,
+        "text_transform": "uppercase",
+        "heading_alignment": "center",
+        "content_alignment": "left",
+        "color_text": "#3d3d3d",
+        "color_background": "#ffffff",
+        "padding_top": 28,
+        "padding_bottom": 28,
+        "padding_top_mobile": 21,
+        "padding_bottom_mobile": 21
+      }
     }
   },
   "order": [

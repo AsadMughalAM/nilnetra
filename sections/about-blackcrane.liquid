@@ -9,38 +9,39 @@
   .blackcrane-about-section {
     font-family: 'Work Sans'
     , sans-serif;
-    color: rgb(61, 61, 61);
-    background-color: #ffffff;
-    padding-top: 28px;
-    padding-bottom: 28px;
+    color: {{ section.settings.color_text }};
+    background-color: {{ section.settings.color_background }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
     letter-spacing: 0.6px;
-    /* From inspection */
   }
 
   .blackcrane-page-width {
-    max-width: 726px;
+    max-width: {{ section.settings.page_width }}px;
     margin: 0 auto;
     padding: 0 1.5rem;
   }
 
   .blackcrane-title {
-    font-size: 20px;
+    font-size: {{ section.settings.heading_size }}px;
     font-weight: 400;
-    text-align: center;
-    text-transform: uppercase;
+    text-align: {{ section.settings.heading_alignment }};
+    text-transform: {{ section.settings.text_transform }};
     margin: 0 0 2rem;
     line-height: 1.3;
-    color: rgb(61, 61, 61);
+    color: inherit;
+  }
+
+  .blackcrane-rte {
+    text-align: {{ section.settings.content_alignment }};
   }
 
   .blackcrane-rte p {
-    font-size: 14px;
-    /* Desktop */
+    font-size: {{ section.settings.text_size }}px;
     line-height: 1.8;
-    /* 25.2px / 14px approx */
     margin-bottom: 1.5rem;
-    text-transform: uppercase;
-    color: rgb(61, 61, 61);
+    text-transform: {{ section.settings.text_transform }};
+    color: inherit;
   }
 
   .blackcrane-rte strong {
@@ -50,16 +51,14 @@
 
   @media screen and (max-width: 749px) {
     .blackcrane-about-section {
-      padding-top: 21px;
-      padding-bottom: 21px;
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
     }
     .blackcrane-rte p {
-      font-size: 15px;
-      /* Mobile larger for readability per inspection */
+      font-size: {{ section.settings.text_size_mobile }}px;
     }
     .blackcrane-page-width {
       padding: 0 1.5rem;
-      /* Ensure padding on mobile */
     }
   }
 </style>
@@ -67,23 +66,15 @@
 <div class="blackcrane-about-section">
   <div class="blackcrane-page-width">
     <!-- Main Title -->
-    <h1 class="blackcrane-title">ABOUT</h1>
+    {% if section.settings.title != blank %}
+      <h1 class="blackcrane-title">{{ section.settings.title }}</h1>
+    {% endif %}
 
     <!-- Main Content -->
     <div class="blackcrane-rte">
-      <p>CLOTHES ARE ESSENTIAL TOOLS FOR LIVING.</p>
-      <p>THEY SHOULD BE COMFORTABLE, RELAXING, AND FUNCTIONAL FOR YOUR DAILY LIFE. OUR DESIGN CONCEPT FOCUSES ON CREATING WARDROBE ESSENTIALS THAT SERVE AS AN EXTENSION OF YOUR CLOSET, REFLECTING AND ELEVATING YOUR LIFESTYLE.</p>
-      <p>FOCUSING ON AN INCLUSIVE SILHOUETTE THAT COMPLEMENTS SUPPLE LINES AND COMFORT AS A SIMPLE CLOTH FOR THE BODY, WHICH CAN BE TRANSFORMED INTO YOUR CLOTHES, YOUR PERSONALITY SUDDENLY EMERGES ONCE YOU PUT THEM ON.</p>
-      <p>WE VALUE WHERE OUR PRODUCT IS MADE, HOW IT IS MADE, AND WHO MAKES IT.</p>
-      <p>OUR DESIGNS ARE EFFORTLESS YET POLISHED, CRAFTED FROM NATURAL FIBERS THAT ARE RENEWABLE, BIODEGRADABLE, AND LONG-LASTING.</p>
-      <p>TO MINIMIZE WASTE IN PRODUCTION, WE LIMIT OURSELVES TO TWO SEASONS PER YEAR AND EMPLOY A CUT-TO-ORDER PRODUCTION SYSTEM TO AVOID OVERPRODUCTION.</p>
-      <br>
-      <p>
-        <strong>DIRECTOR: ALEXANDER YAMAGUCHI</strong>
-      </p>
-      <p>
-        <strong>DESIGNER: MOMO SUZUKI</strong>
-      </p>
+      {% if section.settings.content != blank %}
+        {{ section.settings.content }}
+      {% endif %}
     </div>
   </div>
 </div>
@@ -96,7 +87,171 @@
     "settings": [
       {
         "type": "header",
-        "content": "Content"
+        "content": "Page Content"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "ABOUT"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Content",
+        "default": "<p>CLOTHES ARE ESSENTIAL TOOLS FOR LIVING.</p><p>THEY SHOULD BE COMFORTABLE, RELAXING, AND FUNCTIONAL FOR YOUR DAILY LIFE. OUR DESIGN CONCEPT FOCUSES ON CREATING WARDROBE ESSENTIALS THAT SERVE AS AN EXTENSION OF YOUR CLOSET, REFLECTING AND ELEVATING YOUR LIFESTYLE.</p><p>FOCUSING ON AN INCLUSIVE SILHOUETTE THAT COMPLEMENTS SUPPLE LINES AND COMFORT AS A SIMPLE CLOTH FOR THE BODY, WHICH CAN BE TRANSFORMED INTO YOUR CLOTHES, YOUR PERSONALITY SUDDENLY EMERGES ONCE YOU PUT THEM ON.</p><p>WE VALUE WHERE OUR PRODUCT IS MADE, HOW IT IS MADE, AND WHO MAKES IT.</p><p>OUR DESIGNS ARE EFFORTLESS YET POLISHED, CRAFTED FROM NATURAL FIBERS THAT ARE RENEWABLE, BIODEGRADABLE, AND LONG-LASTING.</p><p>TO MINIMIZE WASTE IN PRODUCTION, WE LIMIT OURSELVES TO TWO SEASONS PER YEAR AND EMPLOY A CUT-TO-ORDER PRODUCTION SYSTEM TO AVOID OVERPRODUCTION.</p><p><strong>DIRECTOR: ALEXANDER YAMAGUCHI</strong></p><p><strong>DESIGNER: MOMO SUZUKI</strong></p>"
+      },
+      {
+        "type": "header",
+        "content": "Layout & Dimensions"
+      }, {
+        "type": "range",
+        "id": "page_width",
+        "min": 400,
+        "max": 1600,
+        "step": 10,
+        "unit": "px",
+        "label": "Page Width",
+        "default": 726
+      }, {
+        "type": "header",
+        "content": "Typography"
+      }, {
+        "type": "range",
+        "id": "heading_size",
+        "min": 16,
+        "max": 60,
+        "step": 1,
+        "unit": "px",
+        "label": "Heading Font Size",
+        "default": 20
+      }, {
+        "type": "range",
+        "id": "text_size",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Body Font Size (Desktop)",
+        "default": 14
+      }, {
+        "type": "range",
+        "id": "text_size_mobile",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Body Font Size (Mobile)",
+        "default": 15
+      }, {
+        "type": "select",
+        "id": "text_transform",
+        "label": "Text Style",
+        "options": [
+          {
+            "value": "none",
+            "label": "Normal"
+          }, {
+            "value": "uppercase",
+            "label": "Uppercase"
+          }, {
+            "value": "capitalize",
+            "label": "Capitalize"
+          }
+        ],
+        "default": "uppercase"
+      }, {
+        "type": "header",
+        "content": "Alignment"
+      }, {
+        "type": "select",
+        "id": "heading_alignment",
+        "label": "Heading Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          }, {
+            "value": "center",
+            "label": "Center"
+          }, {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      }, {
+        "type": "select",
+        "id": "content_alignment",
+        "label": "Content Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          }, {
+            "value": "center",
+            "label": "Center"
+          }, {
+            "value": "right",
+            "label": "Right"
+          }, {
+            "value": "justify",
+            "label": "Justify"
+          }
+        ],
+        "default": "left"
+      }, {
+        "type": "header",
+        "content": "Colors"
+      }, {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text Color",
+        "default": "#3d3d3d"
+      }, {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background Color",
+        "default": "#ffffff"
+      }, {
+        "type": "header",
+        "content": "Section Padding"
+      }, {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Top padding",
+        "default": 28
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Bottom padding",
+        "default": 28
+      }, {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Top padding (Mobile)",
+        "default": 21
+      }, {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Bottom padding (Mobile)",
+        "default": 21
       }
     ],
     "presets": [
