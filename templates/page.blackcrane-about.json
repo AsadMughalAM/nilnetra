@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "main": {
+      "type": "about-blackcrane",
+      "blocks": {
+        "us": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "UNITED STATES",
+            "content": "<p>CALIFORNIA</p><ul><li>ELIZABETH & PRINCE - LA QUINTA</li><li>ELIZABETH & PRINCE - PALM DESERT</li><li>ELIZABETH & PRINCE - PALM SPRINGS</li></ul>"
+          }
+        },
+        "canada": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "CANADA",
+            "content": "<p>Content coming soon.</p>"
+          }
+        },
+        "asia": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "ASIA",
+            "content": "<p>Content coming soon.</p>"
+          }
+        },
+        "europe": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "EUROPE",
+            "content": "<p>Content coming soon.</p>"
+          }
+        },
+        "mid_east": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "MIDDLE EAST",
+            "content": "<p>Content coming soon.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "us",
+        "canada",
+        "asia",
+        "europe",
+        "mid_east"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
