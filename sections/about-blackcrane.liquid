@@ -1,0 +1,111 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  .blackcrane-about-section {
+    font-family: 'Work Sans'
+    , sans-serif;
+    color: rgb(61, 61, 61);
+    background-color: #ffffff;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    letter-spacing: 0.6px;
+    /* From inspection */
+  }
+
+  .blackcrane-page-width {
+    max-width: 726px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .blackcrane-title {
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0 0 2rem;
+    line-height: 1.3;
+    color: rgb(61, 61, 61);
+  }
+
+  .blackcrane-rte p {
+    font-size: 14px;
+    /* Desktop */
+    line-height: 1.8;
+    /* 25.2px / 14px approx */
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    color: rgb(61, 61, 61);
+  }
+
+  .blackcrane-rte strong {
+    font-weight: 600;
+  }
+
+
+  @media screen and (max-width: 749px) {
+    .blackcrane-about-section {
+      padding-top: 21px;
+      padding-bottom: 21px;
+    }
+    .blackcrane-rte p {
+      font-size: 15px;
+      /* Mobile larger for readability per inspection */
+    }
+    .blackcrane-page-width {
+      padding: 0 1.5rem;
+      /* Ensure padding on mobile */
+    }
+  }
+</style>
+
+<div class="blackcrane-about-section">
+  <div class="blackcrane-page-width">
+    <!-- Main Title -->
+    <h1 class="blackcrane-title">ABOUT</h1>
+
+    <!-- Main Content -->
+    <div class="blackcrane-rte">
+      <p>CLOTHES ARE ESSENTIAL TOOLS FOR LIVING.</p>
+      <p>THEY SHOULD BE COMFORTABLE, RELAXING, AND FUNCTIONAL FOR YOUR DAILY LIFE. OUR DESIGN CONCEPT FOCUSES ON CREATING WARDROBE ESSENTIALS THAT SERVE AS AN EXTENSION OF YOUR CLOSET, REFLECTING AND ELEVATING YOUR LIFESTYLE.</p>
+      <p>FOCUSING ON AN INCLUSIVE SILHOUETTE THAT COMPLEMENTS SUPPLE LINES AND COMFORT AS A SIMPLE CLOTH FOR THE BODY, WHICH CAN BE TRANSFORMED INTO YOUR CLOTHES, YOUR PERSONALITY SUDDENLY EMERGES ONCE YOU PUT THEM ON.</p>
+      <p>WE VALUE WHERE OUR PRODUCT IS MADE, HOW IT IS MADE, AND WHO MAKES IT.</p>
+      <p>OUR DESIGNS ARE EFFORTLESS YET POLISHED, CRAFTED FROM NATURAL FIBERS THAT ARE RENEWABLE, BIODEGRADABLE, AND LONG-LASTING.</p>
+      <p>TO MINIMIZE WASTE IN PRODUCTION, WE LIMIT OURSELVES TO TWO SEASONS PER YEAR AND EMPLOY A CUT-TO-ORDER PRODUCTION SYSTEM TO AVOID OVERPRODUCTION.</p>
+      <br>
+      <p>
+        <strong>DIRECTOR: ALEXANDER YAMAGUCHI</strong>
+      </p>
+      <p>
+        <strong>DESIGNER: MOMO SUZUKI</strong>
+      </p>
+    </div>
+
+
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Black Crane About",
+    "tag": "section",
+    "class": "section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      }
+    ],
+
+    "presets": [
+      {
+        "name": "Black Crane About"
+      }
+    ]
+  }
+{% endschema %}
