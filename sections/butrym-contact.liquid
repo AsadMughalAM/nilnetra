@@ -1,0 +1,219 @@
+{% schema %}
+  {
+    "name": "Butrym Contact Page",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Main Contact Info"
+      },
+      {
+        "type": "text",
+        "id": "main_heading",
+        "label": "Page Heading",
+        "default": "Contact"
+      },
+      {
+        "type": "textarea",
+        "id": "intro_text",
+        "label": "Intro Text",
+        "default": "Need help regarding your order or have a question on a specific product?"
+      },
+      {
+        "type": "text",
+        "id": "customer_care_email",
+        "label": "Customer Care Email",
+        "default": "customercare@magdabutrym.com"
+      }, {
+        "type": "text",
+        "id": "whatsapp_text",
+        "label": "WhatsApp Text",
+        "default": "WhatsApp: +48 123 456 789"
+      }, {
+        "type": "url",
+        "id": "whatsapp_link",
+        "label": "WhatsApp Link"
+      }, {
+        "type": "header",
+        "content": "Secondary Sections"
+      }, {
+        "type": "text",
+        "id": "left_col_title",
+        "label": "Left Column Title",
+        "default": "Press"
+      }, {
+        "type": "text",
+        "id": "left_col_email",
+        "label": "Left Column Email",
+        "default": "pr@magdabutrym.com"
+      }, {
+        "type": "text",
+        "id": "right_col_title",
+        "label": "Right Column Title",
+        "default": "Wholesale Enquiries"
+      }, {
+        "type": "text",
+        "id": "right_col_email",
+        "label": "Right Column Email",
+        "default": "wholesale@magdabutrym.com"
+      }, {
+        "type": "header",
+        "content": "Colors & Spacing"
+      }, {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#f5f5f4"
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#000000"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Butrym Contact Page"
+      }
+    ]
+  }
+{% endschema %}
+
+<div class="butrym-contact-page" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+
+  <!-- Section 1: Main Customer Care -->
+  <div class="contact-section-top">
+    <h1 class="main-title">{{ section.settings.main_heading }}</h1>
+    <p class="intro-text">{{ section.settings.intro_text }}</p>
+
+    <div class="contact-links">
+      <a href="mailto:{{ section.settings.customer_care_email }}" class="contact-link">{{ section.settings.customer_care_email }}</a>
+      {% if section.settings.whatsapp_text != blank %}
+        <br>
+        <a href="{{ section.settings.whatsapp_link | default: '#' }}" class="contact-link">{{ section.settings.whatsapp_text }}</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Section 2: Split Columns (Press / Wholesale) -->
+  <div class="contact-section-split">
+    <div class="split-col">
+      <h2 class="sub-title">{{ section.settings.left_col_title }}</h2>
+      <a href="mailto:{{ section.settings.left_col_email }}" class="contact-link">{{ section.settings.left_col_email }}</a>
+    </div>
+
+    <div class="split-col">
+      <h2 class="sub-title">{{ section.settings.right_col_title }}</h2>
+      <a href="mailto:{{ section.settings.right_col_email }}" class="contact-link">{{ section.settings.right_col_email }}</a>
+    </div>
+  </div>
+
+</div>
+
+<style>
+  /* Import a serif font if not available globaly. Using generic serif for now to match style */
+  .butrym-contact-page {
+    padding: 100px 20px 150px;
+    font-family: 'Helvetica'
+    , 'Arial'
+    , sans-serif;
+    /* Fallback for body text */
+    text-align: center;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Typography */
+  .main-title {
+    font-family: 'Times New Roman'
+    , Times
+    , serif;
+    /* Elegant Serif */
+    font-size: 3rem;
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    color: inherit;
+  }
+
+  .intro-text {
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+  }
+
+  .sub-title {
+    font-family: 'Times New Roman'
+    , Times
+    , serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 15px;
+    margin-top: 0;
+  }
+
+  /* Links */
+  .contact-link {
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    transition: opacity 0.3s;
+    color: inherit;
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+
+  .contact-link:hover {
+    opacity: 0.6;
+  }
+
+  /* Layout Spacing */
+  .contact-section-top {
+    margin-bottom: 120px;
+    /* Huge spacing as per reference */
+  }
+
+  .contact-section-split {
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+    /* Large horizontal gap */
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .split-col {
+    flex: 1;
+    text-align: center;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .butrym-contact-page {
+      padding-top: 60px;
+      padding-bottom: 80px;
+    }
+
+    .contact-section-top {
+      margin-bottom: 80px;
+    }
+
+    .contact-section-split {
+      flex-direction: column;
+      gap: 60px;
+    }
+
+    .main-title {
+      font-size: 2.5rem;
+    }
+  }
+</style>
