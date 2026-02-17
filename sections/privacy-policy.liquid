@@ -1,0 +1,197 @@
+{% schema %}
+  {
+    "name": "Privacy Policy",
+    "settings": [
+      {
+        "type": "text",
+        "id": "page_heading",
+        "label": "Page Heading",
+        "default": "PRIVACY POLICY"
+      }, {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#FFFFFF"
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#000000"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "content_block",
+        "name": "Policy Section",
+        "settings": [
+          {
+            "type": "text",
+            "id": "subheading",
+            "label": "Section Title",
+            "default": "1. INTRODUCTION"
+          }, {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>Add policy details here.</p>"
+
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Privacy Policy Page",
+        "blocks": [
+          {
+            "type": "content_block",
+            "settings": {
+              "subheading": "1. INTRODUCTION",
+              "content": "<p>1.1. Welcome to Ren London Ltd. We are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner. This Privacy Policy outlines how we collect, use, and protect your personal information.</p><p>1.2. By using our website and providing your personal information to us, you consent to the collection, use, and disclosure of your information as described in this Privacy Policy.</p>"
+            }
+          },
+          {
+            "type": "content_block",
+            "settings": {
+              "subheading": "2. INFORMATION WE COLLECT",
+              "content": "<p>2.1. We may collect personal information from you when you visit our website, register an account, place an order, subscribe to our newsletter, or interact with us in any other way.</p><p>2.2. The types of personal information we may collect include: - Name - Contact information (email address, phone number, shipping address) - Payment information (credit/debit card details) - Demographic information (age, gender, etc.) - Purchase history - Preferences and interests</p>"
+            }
+          },
+          {
+            "type": "content_block",
+            "settings": {
+              "subheading": "3. HOW WE USE YOUR INFORMATION",
+              "content": "<p>3.1. We may use your personal information for the following purposes: - Processing and fulfilling orders - Communicating with you about your orders, products, and promotions - Providing customer support - Sending newsletters and marketing communications (you may opt out at any time) - Conducting market research and improving our products and services - Complying with legal obligations</p>"
+            }
+          },
+          {
+            "type": "content_block",
+            "settings": {
+              "subheading": "4. INFORMATION SHARING",
+              "content": "<p>4.1. We may share your personal information with third-party service providers who assist us in operating our website, processing payments, delivering orders, or conducting other business activities. These service providers are required to maintain the confidentiality of your information and are prohibited from using it for any other purpose.</p><p>4.2. We may also disclose your personal information when required by law or in response to lawful requests by public authorities.</p>"
+            }
+          }, {
+            "type": "content_block",
+            "settings": {
+              "subheading": "5. DATA SECURITY",
+              "content": "<p>5.1. We implement appropriate technical and organizational measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction.</p><p>5.2. Despite our best efforts, no method of transmission over the internet or electronic storage is 100% secure. Therefore, we cannot guarantee the absolute security of your information.</p>"
+            }
+          }, {
+            "type": "content_block",
+            "settings": {
+              "subheading": "6. COOKIES",
+              "content": "<p>6.1. We use cookies and similar tracking technologies to enhance your browsing experience, analyze website traffic, and personalize content and advertisements.</p><p>6.2. You can control cookies through your web browser settings and opt out of certain types of tracking by adjusting your preferences.</p>"
+            }
+          }, {
+            "type": "content_block",
+            "settings": {
+              "subheading": "7. YOUR RIGHTS",
+              "content": "<p>7.1. You have the right to access, update, or delete your personal information. You may also request a copy of the personal information we hold about you.</p><p>7.2. If you believe that any information we hold about you is incorrect or incomplete, please contact us and we will promptly correct it.</p>"
+            }
+          }, {
+            "type": "content_block",
+            "settings": {
+              "subheading": "8. CHILDREN’S PRIVACY",
+              "content": "<p>8.1. Our website is not intended for children under the age of 13. We do not knowingly collect personal information from children.</p>"
+            }
+          }, {
+            "type": "content_block",
+            "settings": {
+              "subheading": "9. CHANGES TO PRIVACY POLICY",
+              "content": "<p>9.1. We reserve the right to modify or update this Privacy Policy at any time. We will notify you of any changes by posting the revised policy on our website.</p>"
+            }
+          }, {
+            "type": "content_block",
+            "settings": {
+              "subheading": "10. CONTACT US",
+              "content": "<p>10.1. If you have any questions or concerns about our privacy practices or this Privacy Policy, please contact us at <strong>contact@renlondon.com</strong></p>"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+<div class="privacy-policy-page" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="page-container">
+    <h1 class="main-heading">{{ section.settings.page_heading }}</h1>
+
+    <div class="content-container">
+      {% for block in section.blocks %}
+        <div class="content-block" {{ block.shopify_attributes }}>
+          <h2 class="subheading">{{ block.settings.subheading }}</h2>
+          <div class="text-content">
+            {{ block.settings.content }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .privacy-policy-page {
+    padding: 60px 20px;
+    font-family: inherit;
+  }
+
+  .page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .main-heading {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 60px;
+    font-family: inherit;
+  }
+
+  .content-container {
+    max-width: 800px;
+    /* Constrain width for readability in single column */
+    margin: 0 auto;
+  }
+
+
+  .content-block {
+    margin-bottom: 40px;
+  }
+
+  .subheading {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+    color: inherit;
+  }
+
+  .text-content {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.9;
+    color: inherit;
+  }
+
+  .text-content p {
+    margin-bottom: 15px;
+  }
+
+  .text-content ul {
+    margin-bottom: 15px;
+    padding-left: 20px;
+  }
+
+  .text-content li {
+    margin-bottom: 5px;
+  }
+
+  .text-content a {
+    text-decoration: underline;
+    color: inherit;
+  }
+</style>

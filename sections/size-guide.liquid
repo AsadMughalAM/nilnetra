@@ -1,0 +1,214 @@
+{% schema %}
+  {
+    "name": "Size Guide",
+    "settings": [
+      {
+        "type": "text",
+        "id": "page_heading",
+        "label": "Page Heading",
+        "default": "SIZE GUIDE"
+      },
+      {
+        "type": "richtext",
+        "id": "intro_text",
+        "label": "Intro Text",
+        "default": "<p><strong>BODY MEASUREMENT CHART</strong> (all measurements are mentioned in inches)</p>"
+      },
+      {
+        "type": "richtext",
+        "id": "outro_text",
+        "label": "Additional Notes",
+        "default": "<p>NOTE: The chart mentions body measurements and not garment dimensions.<br>Our garment fits are categorised as Fitted and Loose Fitted.<br>For Loose fit garments we add 4 to 6 inches ease to the body measurements.<br>Depending on the style of the garments the measurements might vary.</p><p><strong>BOTTOMS, PANTS AND SKIRTS</strong><br>All bottoms, pants and skirts are mostly high waisted and true to size, hence should be ordered as per your waist measurement.</p><p>Can't find your size? Email us.</p>"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#FFFFFF"
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "border_color",
+        "label": "Table Border Color",
+        "default": "#E5E5E5"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "measurement_row",
+        "name": "Measurement Row",
+        "settings": [
+          {
+            "type": "text",
+            "id": "size_label",
+            "label": "Size Label",
+            "default": "S"
+          },
+          {
+            "type": "text",
+            "id": "shoulder",
+            "label": "Shoulder",
+            "default": "15"
+          },
+          {
+            "type": "text",
+            "id": "bust",
+            "label": "Bust",
+            "default": "36"
+          },
+          {
+            "type": "text",
+            "id": "waist",
+            "label": "Waist",
+            "default": "30"
+          }, {
+            "type": "text",
+            "id": "hip",
+            "label": "Hip",
+            "default": "38"
+          }, {
+            "type": "text",
+            "id": "uk_size",
+            "label": "UK Size",
+            "default": "10"
+          }, {
+            "type": "text",
+            "id": "us_size",
+            "label": "US Size",
+            "default": "6"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Size Guide Page"
+      }
+    ]
+  }
+{% endschema %}
+
+<div class="size-guide-page" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="page-container">
+    <h1 class="main-heading">{{ section.settings.page_heading }}</h1>
+
+    <div class="intro-text text-content">
+      {{ section.settings.intro_text }}
+    </div>
+
+    <div class="table-container">
+      <table class="size-table">
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>Shoulder</th>
+            <th>Bust</th>
+            <th>Waist</th>
+            <th>Hip</th>
+            <th>UK</th>
+            <th>US</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for block in section.blocks %}
+            <tr {{ block.shopify_attributes }}>
+              <td class="col-highlight">{{ block.settings.size_label }}</td>
+              <td>{{ block.settings.shoulder }}</td>
+              <td>{{ block.settings.bust }}</td>
+              <td>{{ block.settings.waist }}</td>
+              <td>{{ block.settings.hip }}</td>
+              <td>{{ block.settings.uk_size }}</td>
+              <td>{{ block.settings.us_size }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="outro-text text-content">
+      {{ section.settings.outro_text }}
+    </div>
+  </div>
+</div>
+
+<style>
+  .size-guide-page {
+    padding: 60px 20px;
+    font-family: inherit;
+  }
+
+  .page-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .main-heading {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: inherit;
+  }
+
+  .text-content {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    color: inherit;
+  }
+
+  .intro-text {
+    text-align: center;
+  }
+
+  .outro-text {
+    margin-top: 40px;
+    font-size: 0.9rem;
+  }
+
+  /* Table Styles */
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 40px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .size-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    /* Ensure table doesn't squash too much on small screens */
+    font-size: 0.9rem;
+  }
+
+  .size-table th,
+  .size-table td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid{{ section.settings.border_color }};
+  }
+
+  .size-table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: rgba(0, 0, 0, 0.02);
+    letter-spacing: 0.5px;
+  }
+
+  .col-highlight {
+    font-weight: 600;
+  }
+
+  .text-content a {
+    text-decoration: underline;
+    color: inherit;
+  }
+</style>

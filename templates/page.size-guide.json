@@ -1,0 +1,113 @@
+{
+  "sections": {
+    "main": {
+      "type": "size-guide",
+      "settings": {
+        "page_heading": "SIZE GUIDE",
+        "intro_text": "<p><strong>BODY MEASUREMENT CHART</strong> (all measurements are mentioned in inches)</p>",
+        "outro_text": "<p>NOTE: The chart mentions body measurements and not garment dimensions.<br>Our garment fits are categorised as Fitted and Loose Fitted.<br>For Loose fit garments we add 4 to 6 inches ease to the body measurements.<br>Depending on the style of the garments the measurements might vary.<br>Please refer the garment image, details mentioned on the product page and this size guide before placing your order.</p><p><strong>BOTTOMS, PANTS AND SKIRTS</strong><br>All bottoms, pants and skirts are mostly high waisted and true to size, hence should be ordered as per your waist measurement.</p><p>Can't find your size ?<br>Email us at <a href='mailto:care@nilnetra.com'>care@nilnetra.com</a></p>",
+        "bg_color": "#ffffff",
+        "text_color": "#000000",
+        "border_color": "#e0e0e0"
+      },
+      "blocks": {
+        "row_xxs": {
+          "type": "measurement_row",
+          "settings": {
+            "size_label": "XXS",
+            "shoulder": "14",
+            "bust": "32",
+            "waist": "26",
+            "hip": "34",
+            "uk_size": "6",
+            "us_size": "2"
+          }
+        },
+        "row_xs": {
+          "type": "measurement_row",
+          "settings": {
+            "size_label": "XS",
+            "shoulder": "14.5",
+            "bust": "34",
+            "waist": "28",
+            "hip": "36",
+            "uk_size": "8",
+            "us_size": "4"
+          }
+        },
+        "row_s": {
+          "type": "measurement_row",
+          "settings": {
+            "size_label": "S",
+            "shoulder": "15",
+            "bust": "36",
+            "waist": "30",
+            "hip": "38",
+            "uk_size": "10",
+            "us_size": "6"
+          }
+        },
+        "row_m": {
+          "type": "measurement_row",
+          "settings": {
+            "size_label": "M",
+            "shoulder": "15.5",
+            "bust": "38",
+            "waist": "32",
+            "hip": "40",
+            "uk_size": "12",
+            "us_size": "8"
+          }
+        },
+        "row_l": {
+          "type": "measurement_row",
+          "settings": {
+            "size_label": "L",
+            "shoulder": "16",
+            "bust": "40",
+            "waist": "34",
+            "hip": "42",
+            "uk_size": "14",
+            "us_size": "10"
+          }
+        },
+        "row_xl": {
+          "type": "measurement_row",
+          "settings": {
+            "size_label": "XL",
+            "shoulder": "16.5",
+            "bust": "42",
+            "waist": "36",
+            "hip": "44",
+            "uk_size": "16",
+            "us_size": "12"
+          }
+        },
+        "row_xxl": {
+          "type": "measurement_row",
+          "settings": {
+            "size_label": "XXL",
+            "shoulder": "17",
+            "bust": "44",
+            "waist": "38",
+            "hip": "46",
+            "uk_size": "18",
+            "us_size": "14"
+          }
+        }
+      },
+      "block_order": [
+        "row_xxs",
+        "row_xs",
+        "row_s",
+        "row_m",
+        "row_l",
+        "row_xl",
+        "row_xxl"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
