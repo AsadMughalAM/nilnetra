@@ -11,92 +11,141 @@
         "border_color": "#e0e0e0"
       },
       "blocks": {
-        "row_xxs": {
-          "type": "measurement_row",
+        "col_size": {
+          "type": "table_column",
           "settings": {
-            "size_label": "XXS",
-            "shoulder": "14",
-            "bust": "32",
-            "waist": "26",
-            "hip": "34",
-            "uk_size": "6",
-            "us_size": "2"
+            "heading": "Size"
+          }
+        },
+        "col_shoulder": {
+          "type": "table_column",
+          "settings": {
+            "heading": "Shoulder"
+          }
+        },
+        "col_bust": {
+          "type": "table_column",
+          "settings": {
+            "heading": "Bust"
+          }
+        },
+        "col_waist": {
+          "type": "table_column",
+          "settings": {
+            "heading": "Waist"
+          }
+        },
+        "col_hip": {
+          "type": "table_column",
+          "settings": {
+            "heading": "Hip"
+          }
+        },
+        "col_uk": {
+          "type": "table_column",
+          "settings": {
+            "heading": "UK"
+          }
+        },
+        "col_us": {
+          "type": "table_column",
+          "settings": {
+            "heading": "US"
+          }
+        },
+        "row_xxs": {
+          "type": "table_row",
+          "settings": {
+            "col_1": "XXS",
+            "col_2": "14",
+            "col_3": "32",
+            "col_4": "26",
+            "col_5": "34",
+            "col_6": "6",
+            "col_7": "2"
           }
         },
         "row_xs": {
-          "type": "measurement_row",
+          "type": "table_row",
           "settings": {
-            "size_label": "XS",
-            "shoulder": "14.5",
-            "bust": "34",
-            "waist": "28",
-            "hip": "36",
-            "uk_size": "8",
-            "us_size": "4"
+            "col_1": "XS",
+            "col_2": "14.5",
+            "col_3": "34",
+            "col_4": "28",
+            "col_5": "36",
+            "col_6": "8",
+            "col_7": "4"
           }
         },
         "row_s": {
-          "type": "measurement_row",
+          "type": "table_row",
           "settings": {
-            "size_label": "S",
-            "shoulder": "15",
-            "bust": "36",
-            "waist": "30",
-            "hip": "38",
-            "uk_size": "10",
-            "us_size": "6"
+            "col_1": "S",
+            "col_2": "15",
+            "col_3": "36",
+            "col_4": "30",
+            "col_5": "38",
+            "col_6": "10",
+            "col_7": "6"
           }
         },
         "row_m": {
-          "type": "measurement_row",
+          "type": "table_row",
           "settings": {
-            "size_label": "M",
-            "shoulder": "15.5",
-            "bust": "38",
-            "waist": "32",
-            "hip": "40",
-            "uk_size": "12",
-            "us_size": "8"
+            "col_1": "M",
+            "col_2": "15.5",
+            "col_3": "38",
+            "col_4": "32",
+            "col_5": "40",
+            "col_6": "12",
+            "col_7": "8"
           }
         },
         "row_l": {
-          "type": "measurement_row",
+          "type": "table_row",
           "settings": {
-            "size_label": "L",
-            "shoulder": "16",
-            "bust": "40",
-            "waist": "34",
-            "hip": "42",
-            "uk_size": "14",
-            "us_size": "10"
+            "col_1": "L",
+            "col_2": "16",
+            "col_3": "40",
+            "col_4": "34",
+            "col_5": "42",
+            "col_6": "14",
+            "col_7": "10"
           }
         },
         "row_xl": {
-          "type": "measurement_row",
+          "type": "table_row",
           "settings": {
-            "size_label": "XL",
-            "shoulder": "16.5",
-            "bust": "42",
-            "waist": "36",
-            "hip": "44",
-            "uk_size": "16",
-            "us_size": "12"
+            "col_1": "XL",
+            "col_2": "16.5",
+            "col_3": "42",
+            "col_4": "36",
+            "col_5": "44",
+            "col_6": "16",
+            "col_7": "12"
           }
         },
         "row_xxl": {
-          "type": "measurement_row",
+          "type": "table_row",
           "settings": {
-            "size_label": "XXL",
-            "shoulder": "17",
-            "bust": "44",
-            "waist": "38",
-            "hip": "46",
-            "uk_size": "18",
-            "us_size": "14"
+            "col_1": "XXL",
+            "col_2": "17",
+            "col_3": "44",
+            "col_4": "38",
+            "col_5": "46",
+            "col_6": "18",
+            "col_7": "14"
           }
         }
       },
       "block_order": [
+        "col_size",
+        "col_shoulder",
+        "col_bust",
+        "col_waist",
+        "col_hip",
+        "col_uk",
+        "col_us",
         "row_xxs",
         "row_xs",
         "row_s",

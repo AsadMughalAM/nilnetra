@@ -39,47 +39,64 @@
     ],
     "blocks": [
       {
-        "type": "measurement_row",
-        "name": "Measurement Row",
+        "type": "table_column",
+        "name": "Column Header",
+        "limit": 8,
         "settings": [
           {
             "type": "text",
-            "id": "size_label",
-            "label": "Size Label",
-            "default": "S"
+            "id": "heading",
+            "label": "Column Heading",
+            "default": "Size"
+          }
+        ]
+      }, {
+        "type": "table_row",
+        "name": "Data Row",
+        "settings": [
+          {
+            "type": "text",
+            "id": "col_1",
+            "label": "Column 1 Data",
+            "info": "Corresponds to the 1st Column Header"
           },
           {
             "type": "text",
-            "id": "shoulder",
-            "label": "Shoulder",
-            "default": "15"
+            "id": "col_2",
+            "label": "Column 2 Data",
+            "info": "Corresponds to the 2nd Column Header"
           },
           {
             "type": "text",
-            "id": "bust",
-            "label": "Bust",
-            "default": "36"
+            "id": "col_3",
+            "label": "Column 3 Data",
+            "info": "Corresponds to the 3rd Column Header"
           },
           {
             "type": "text",
-            "id": "waist",
-            "label": "Waist",
-            "default": "30"
+            "id": "col_4",
+            "label": "Column 4 Data",
+            "info": "Corresponds to the 4th Column Header"
           }, {
             "type": "text",
-            "id": "hip",
-            "label": "Hip",
-            "default": "38"
+            "id": "col_5",
+            "label": "Column 5 Data",
+            "info": "Corresponds to the 5th Column Header"
           }, {
             "type": "text",
-            "id": "uk_size",
-            "label": "UK Size",
-            "default": "10"
+            "id": "col_6",
+            "label": "Column 6 Data",
+            "info": "Corresponds to the 6th Column Header"
           }, {
             "type": "text",
-            "id": "us_size",
-            "label": "US Size",
-            "default": "6"
+            "id": "col_7",
+            "label": "Column 7 Data",
+            "info": "Corresponds to the 7th Column Header"
+          }, {
+            "type": "text",
+            "id": "col_8",
+            "label": "Column 8 Data",
+            "info": "Corresponds to the 8th Column Header"
           }
         ]
       }
@@ -104,26 +121,45 @@
       <table class="size-table">
         <thead>
           <tr>
-            <th>Size</th>
-            <th>Shoulder</th>
-            <th>Bust</th>
-            <th>Waist</th>
-            <th>Hip</th>
-            <th>UK</th>
-            <th>US</th>
+            {% assign column_count = 0 %}
+            {% for block in section.blocks %}
+              {% if block.type == 'table_column' %}
+                {% assign column_count = column_count | plus: 1 %}
+                <th>{{ block.settings.heading }}</th>
+              {% endif %}
+            {% endfor %}
           </tr>
         </thead>
         <tbody>
           {% for block in section.blocks %}
-            <tr {{ block.shopify_attributes }}>
-              <td class="col-highlight">{{ block.settings.size_label }}</td>
-              <td>{{ block.settings.shoulder }}</td>
-              <td>{{ block.settings.bust }}</td>
-              <td>{{ block.settings.waist }}</td>
-              <td>{{ block.settings.hip }}</td>
-              <td>{{ block.settings.uk_size }}</td>
-              <td>{{ block.settings.us_size }}</td>
-            </tr>
+            {% if block.type == 'table_row' %}
+              <tr {{ block.shopify_attributes }}>
+                {% if column_count >= 1 %}
+                  <td>{{ block.settings.col_1 }}</td>
+                {% endif %}
+                {% if column_count >= 2 %}
+                  <td>{{ block.settings.col_2 }}</td>
+                {% endif %}
+                {% if column_count >= 3 %}
+                  <td>{{ block.settings.col_3 }}</td>
+                {% endif %}
+                {% if column_count >= 4 %}
+                  <td>{{ block.settings.col_4 }}</td>
+                {% endif %}
+                {% if column_count >= 5 %}
+                  <td>{{ block.settings.col_5 }}</td>
+                {% endif %}
+                {% if column_count >= 6 %}
+                  <td>{{ block.settings.col_6 }}</td>
+                {% endif %}
+                {% if column_count >= 7 %}
+                  <td>{{ block.settings.col_7 }}</td>
+                {% endif %}
+                {% if column_count >= 8 %}
+                  <td>{{ block.settings.col_8 }}</td>
+                {% endif %}
+              </tr>
+            {% endif %}
           {% endfor %}
         </tbody>
       </table>
