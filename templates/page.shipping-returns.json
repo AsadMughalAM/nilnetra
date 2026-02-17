@@ -1,0 +1,74 @@
+{
+  "sections": {
+    "main": {
+      "type": "shipping-returns",
+      "settings": {
+        "page_heading": "SHIPPING",
+        "bg_color": "#ffffff",
+        "text_color": "#000000"
+      },
+      "blocks": {
+        "uk_shipping": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "UK",
+            "content": "<p>Standard shipping within the UK is £5.</p><p><strong>Please allow up to 3 working days for us to prepare your order.</strong> We use Royal Mail and process orders Monday - Friday. If you require urgent delivery on your order please get in touch and we’ll be happy to accommodate.</p><p>We are not responsible for any shipping delays outside of our control.</p>",
+            "column_position": "left"
+          }
+        },
+        "returns": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "RETURNS",
+            "content": "<p>Due to limited inventory, <strong>all in-store purchases are final sale</strong> and not eligible for return or exchange.</p><p>Online returns and exchanges can be made on full-priced items and no later than 14 days from the date of receipt.</p><ul><li>Notify us on <strong>contact@studioren.co.uk</strong> to receive confirmation of the return.</li><li>Items must be returned in their original condition and packaging.</li></ul>",
+            "column_position": "left"
+          }
+        },
+        "international": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "INTERNATIONAL",
+            "content": "<p>We offer worldwide shipping.</p><p><strong>Europe:</strong> £15 (3-5 working days)</p><p><strong>Rest of World:</strong> £25 (5-7 working days)</p><p>Please note that international orders may be subject to customs duties and taxes, which are the responsibility of the customer.</p>",
+            "column_position": "right"
+          }
+        },
+        "exchanges": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "EXCHANGES",
+            "content": "<p>If you would like to exchange an item for a different size or color, please return the original item for a refund and place a new order.</p><p>Exchanges are subject to stock availability. Please contact us at <strong>contact@studioren.co.uk</strong> for assistance.</p>",
+            "column_position": "left"
+          }
+        },
+        "item_pre_order": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "PRE-ORDER",
+            "content": "<p>Pre-order items are products that are not currently in stock but will be shipped at a future date.</p><p>We will provide an estimated shipping date on the product page. Please note that dates are subject to change.</p>",
+            "column_position": "right"
+          }
+        },
+        "packaging": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "PACKAGING",
+            "content": "<p>We take pride in our eco-friendly packaging. All orders are wrapped in recyclable paper and shipped in compostable mailers.</p><p>If your order is a gift, please leave a note at checkout and we will remove the invoice.</p>",
+            "column_position": "right"
+          }
+        }
+      },
+      "block_order": [
+        "uk_shipping",
+        "returns",
+        "returns",
+        "exchanges",
+        "international",
+        "item_pre_order",
+        "packaging"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

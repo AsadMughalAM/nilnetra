@@ -1,0 +1,283 @@
+{% schema %}
+  {
+    "name": "Shipping & Returns",
+    "settings": [
+      {
+        "type": "text",
+        "id": "page_heading",
+        "label": "Page Heading",
+        "default": "SHIPPING"
+      }, {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#FFFFFF"
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#000000"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "content_block",
+        "name": "Content Block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading",
+            "default": "Section Title"
+          }, {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>Add your shipping or returns information here.</p>"
+          }, {
+            "type": "select",
+            "id": "column_position",
+            "label": "Column Position",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left Column"
+              }, {
+                "value": "right",
+                "label": "Right Column"
+              }
+            ],
+            "default": "left"
+          }
+        ]
+      }, {
+        "type": "accordion_block",
+        "name": "Accordion Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Question or Topic"
+          }, {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>Add your answer or details here.</p>"
+          }, {
+            "type": "select",
+            "id": "column_position",
+            "label": "Column Position",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left Column"
+              }, {
+                "value": "right",
+                "label": "Right Column"
+              }
+            ],
+            "default": "left"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Shipping & Returns Page",
+        "blocks": [
+          {
+            "type": "content_block",
+            "settings": {
+              "subheading": "UK",
+              "content": "<p>Standard shipping within the UK is £5.</p>",
+              "column_position": "left"
+            }
+          }, {
+            "type": "content_block",
+            "settings": {
+              "subheading": "RETURNS",
+              "content": "<p>Due to limited inventory, all in-store purchases are final sale.</p>",
+              "column_position": "left"
+            }
+          }, {
+            "type": "content_block",
+            "settings": {
+              "subheading": "INTERNATIONAL",
+              "content": "<p>International shipping rates vary by location.</p>",
+              "column_position": "right"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+<div class="shipping-returns-page" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="page-container">
+    <h1 class="main-heading">{{ section.settings.page_heading }}</h1>
+
+    <div class="content-grid">
+      <div class="column left-column">
+        {% for block in section.blocks %}
+          {% if block.settings.column_position == 'left' %}
+            {% case block.type %}
+              {% when 'content_block' %}
+                <div class="content-block" {{ block.shopify_attributes }}>
+                  <h2 class="subheading">{{ block.settings.subheading }}</h2>
+                  <div class="text-content">
+                    {{ block.settings.content }}
+                  </div>
+                </div>
+              {% when 'accordion_block' %}
+                <div class="accordion-block" {{ block.shopify_attributes }}>
+                  <details>
+                    <summary>
+                      <span class="summary-title">{{ block.settings.heading }}</span>
+                      <span class="icon-plus">+</span>
+                    </summary>
+                    <div class="accordion-content text-content">
+                      {{ block.settings.content }}
+                    </div>
+                  </details>
+                </div>
+            {% endcase %}
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="column right-column">
+        {% for block in section.blocks %}
+          {% if block.settings.column_position == 'right' %}
+            {% case block.type %}
+              {% when 'content_block' %}
+                <div class="content-block" {{ block.shopify_attributes }}>
+                  <h2 class="subheading">{{ block.settings.subheading }}</h2>
+                  <div class="text-content">
+                    {{ block.settings.content }}
+                  </div>
+                </div>
+              {% when 'accordion_block' %}
+                <div class="accordion-block" {{ block.shopify_attributes }}>
+                  <details>
+                    <summary>
+                      <span class="summary-title">{{ block.settings.heading }}</span>
+                      <span class="icon-plus">+</span>
+                    </summary>
+                    <div class="accordion-content text-content">
+                      {{ block.settings.content }}
+                    </div>
+                  </details>
+                </div>
+            {% endcase %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .shipping-returns-page {
+    padding: 60px 20px;
+    font-family: inherit;
+    /* Use theme font */
+  }
+
+  .page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .main-heading {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 60px;
+    font-family: 'Helvetica Neue'
+    , Helvetica
+    , Arial
+    , sans-serif;
+    /* Fallback */
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  @media (min-width: 768px) {
+    .content-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+  }
+
+  .content-block {
+    margin-bottom: 50px;
+  }
+
+  .subheading {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .text-content {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .text-content p {
+    margin-bottom: 15px;
+  }
+
+  .text-content a {
+    text-decoration: underline;
+    color: inherit;
+  }
+
+  /* Accordion Styles */
+  .accordion-block {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  details > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .summary-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+
+  .accordion-content {
+    padding-bottom: 20px;
+    padding-top: 10px;
+  }
+
+  /* Specific typography matching the reference */
+  h1,
+  h2,
+  h3 {
+    color: inherit;
+  }
+</style>
