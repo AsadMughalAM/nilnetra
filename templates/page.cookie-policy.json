@@ -1,0 +1,51 @@
+{
+  "sections": {
+    "main": {
+      "type": "legal-page",
+      "settings": {
+        "page_heading": "COOKIE POLICY",
+        "bg_color": "#ffffff",
+        "text_color": "#000000"
+      },
+      "blocks": {
+        "cookie_1": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "1. WHAT ARE COOKIES?",
+            "content": "<p>Cookies are small text files that are stored on your device (computer, tablet, or mobile) when you visit a website. They are widely used to make websites work more efficiently and to provide information to the owners of the site.</p>"
+          }
+        },
+        "cookie_2": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "2. HOW WE USE COOKIES",
+            "content": "<p>We use cookies for several reasons, including:<br>- Technical Necessity: To make our website work correctly.<br>- Analytics: To understand how visitors interact with our site.<br>- Personalization: To remember your preferences and settings.<br>- Marketing: To deliver relevant advertisements to you.</p>"
+          }
+        },
+        "cookie_3": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "3. TYPES OF COOKIES WE USE",
+            "content": "<p><strong>Strictly Necessary Cookies:</strong> These are essential for you to browse the website and use its features.</p><p><strong>Performance Cookies:</strong> These collect information about how you use our website, like which pages you visited and which links you clicked on.</p><p><strong>Functionality Cookies:</strong> These allow our website to remember choices you have made in the past.</p>"
+          }
+        },
+        "cookie_4": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "4. MANAGING COOKIES",
+            "content": "<p>Most web browsers allow you to control cookies through their settings preferences. However, if you limit the ability of websites to set cookies, you may worsen your overall user experience, since it will no longer be personalized to you.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "cookie_1",
+        "cookie_2",
+        "cookie_3",
+        "cookie_4"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

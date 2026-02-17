@@ -1,0 +1,133 @@
+{% schema %}
+  {
+    "name": "Legal Page",
+    "settings": [
+      {
+        "type": "text",
+        "id": "page_heading",
+        "label": "Page Heading",
+        "default": "PAGE TITLE"
+      }, {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#FFFFFF"
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#000000"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "content_block",
+        "name": "Content Section",
+        "settings": [
+          {
+            "type": "text",
+            "id": "subheading",
+            "label": "Section Title",
+            "default": "1. SECTION TITLE"
+          }, {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>Add content here.</p>"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Legal Page"
+      }
+    ]
+  }
+{% endschema %}
+
+<div class="legal-page-section" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="page-container">
+    <h1 class="main-heading">{{ section.settings.page_heading }}</h1>
+
+    <div class="content-container">
+      {% for block in section.blocks %}
+        <div class="content-block" {{ block.shopify_attributes }}>
+          {% if block.settings.subheading != blank %}
+            <h2 class="subheading">{{ block.settings.subheading }}</h2>
+          {% endif %}
+          <div class="text-content">
+            {{ block.settings.content }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .legal-page-section {
+    padding: 60px 20px;
+    font-family: inherit;
+  }
+
+  .page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .main-heading {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 60px;
+    font-family: inherit;
+    text-align: center;
+    /* Center main title like privacy policy/size guide */
+  }
+
+  .content-container {
+    max-width: 800px;
+    /* Constrain width for readability in single column */
+    margin: 0 auto;
+  }
+
+  .content-block {
+    margin-bottom: 40px;
+  }
+
+  .subheading {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+    color: inherit;
+  }
+
+  .text-content {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.9;
+    color: inherit;
+  }
+
+  .text-content p {
+    margin-bottom: 15px;
+  }
+
+  .text-content ul {
+    margin-bottom: 15px;
+    padding-left: 20px;
+  }
+
+  .text-content li {
+    margin-bottom: 5px;
+  }
+
+  .text-content a {
+    text-decoration: underline;
+    color: inherit;
+  }
+</style>

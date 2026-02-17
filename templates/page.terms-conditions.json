@@ -1,0 +1,83 @@
+{
+  "sections": {
+    "main": {
+      "type": "legal-page",
+      "settings": {
+        "page_heading": "TERMS AND CONDITIONS",
+        "bg_color": "#ffffff",
+        "text_color": "#000000"
+      },
+      "blocks": {
+        "terms_1": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "1. GENERAL",
+            "content": "<p>Welcome to our website. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern our relationship with you in relation to this website.</p>"
+          }
+        },
+        "terms_2": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "2. USE OF THE WEBSITE",
+            "content": "<p>The content of the pages of this website is for your general information and use only. It is subject to change without notice.</p><p>Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness, or suitability of the information and materials found or offered on this website.</p>"
+          }
+        },
+        "terms_3": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "3. INTELLECTUAL PROPERTY",
+            "content": "<p>This website contains material which is owned by or licensed to us. This material includes, but is not limited to, the design, layout, look, appearance and graphics. Reproduction is prohibited other than in accordance with the copyright notice, which forms part of these terms and conditions.</p>"
+          }
+        },
+        "terms_4": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "4. PRODUCT INFORMATION",
+            "content": "<p>We strive to display the colors and images of our products that appear at the store as accurately as possible. However, we cannot guarantee that your computer monitor's display of any color will be accurate.</p><p>We reserve the right to limit the sales of our products or Services to any person, geographic region or jurisdiction.</p>"
+          }
+        },
+        "terms_5": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "5. LIMITATION OF LIABILITY",
+            "content": "<p>In no case shall we, our directors, officers, employees, affiliates, agents, contractors, interns, suppliers, service providers or licensors be liable for any injury, loss, claim, or any direct, indirect, incidental, punitive, special, or consequential damages of any kind.</p>"
+          }
+        },
+        "terms_6": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "6. GOVERNING LAW",
+            "content": "<p>These Terms of Service and any separate agreements whereby we provide you Services shall be governed by and construed in accordance with the laws of the jurisdiction in which our company is registered.</p>"
+          }
+        },
+        "terms_7": {
+          "type": "content_block",
+          "settings": {
+            "subheading": "7. CHANGES TO TERMS",
+            "content": "<p>You can review the most current version of the Terms of Service at any time at this page. We reserve the right, at our sole discretion, to update, change or replace any part of these Terms of Service by posting updates and changes to our website.</p>"
+          }
+        },
+         "terms_8": {
+          "type": "content_block",
+          "settings": {
+             "subheading": "8. CONTACT INFORMATION",
+            "content": "<p>Questions about the Terms of Service should be sent to us at care@nilnetra.com.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "terms_1",
+        "terms_2",
+        "terms_3",
+        "terms_4",
+        "terms_5",
+        "terms_6",
+        "terms_7",
+        "terms_8"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
